@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+respaldo/
+.wrangler
+.dev.vars
+worker/node_modules
