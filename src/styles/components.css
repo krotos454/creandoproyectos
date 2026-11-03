@@ -185,3 +185,25 @@
 .page-header.page-header--compact h1::after { margin-top: 8px; }
 .cursos__ayuda { text-align: center; color: var(--muted); margin: 40px 0 0; }
 .cursos__ayuda a { color: var(--violet-700); font-weight: 600; text-decoration: underline; }
+
+/* ---------- Portada con logo ---------- */
+.hero.hero--logo {
+  min-height: 0; overflow: visible;
+  background:
+    radial-gradient(700px 380px at 90% 10%, rgba(169,155,201,.30), transparent 65%),
+    linear-gradient(180deg, var(--violet-50) 0%, #faf9fc 100%);
+}
+.hero--logo .hero__content { color: var(--violet-900); padding-block: 56px 112px; }
+.hero--logo .hero__content h1 { color: var(--violet-900); }
+.hero--logo .hero__content p { color: var(--muted); }
+.hero__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 32px; align-items: center; }
+.hero__logo {
+  justify-self: center; width: min(360px, 100%); aspect-ratio: 1; border-radius: 50%; background: #fff;
+  display: grid; place-items: center; box-shadow: 0 20px 50px rgba(107,90,145,.25);
+}
+.hero__logo img { width: 80%; height: 80%; object-fit: contain; }
+@media (max-width: 900px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 28px; }
+  .hero--logo .hero__content { padding-block: 36px 96px; }
+  .hero__logo { width: 200px; order: -1; justify-self: start; }
+}

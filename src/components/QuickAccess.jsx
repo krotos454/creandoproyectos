@@ -18,10 +18,10 @@ const items = [
   },
   {
     icon: Rocket,
-    title: 'Animate a aprender',
-    text: 'Explorá nuevas posibilidades, descubrí tus intereses y encontrá un curso para dar el próximo paso.',
-    cta: 'Explorar cursos',
-    to: '/cursos',
+    title: 'Animate a dar el paso',
+    text: '¿Tenés dudas o querés inscribirte? Escribinos y te contamos cómo seguir.',
+    cta: 'Contactanos',
+    to: '/contacto',
   },
 ]
 
