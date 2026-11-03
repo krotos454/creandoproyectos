@@ -16,7 +16,8 @@ export default function CursosDestacados() {
   if (cursos.length === 0) return null
 
   return (
-    <section className="section container" aria-labelledby="destacados-title">
+    <section className="section section--tint" aria-labelledby="destacados-title">
+      <div className="container">
       <div className="section__head">
         <h2 id="destacados-title">Cursos para empezar</h2>
         <p>Una selección de nuestras propuestas más recientes.</p>
@@ -26,6 +27,7 @@ export default function CursosDestacados() {
       </div>
       <div className="section__more">
         <Link to="/cursos" className="btn btn--outline">Ver todos los cursos <ArrowRight size={16} /></Link>
+      </div>
       </div>
     </section>
   )

@@ -7,7 +7,7 @@ const items = [
     title: 'Aprendé y certificá',
     text: 'Descubrí cursos que ofrecen certificados al finalizar y conocé quién certifica cada propuesta.',
     cta: 'Ver cursos',
-    to: '/cursos?certificado=1',
+    to: '/cursos',
   },
   {
     icon: Briefcase,

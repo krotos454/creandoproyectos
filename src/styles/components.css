@@ -138,3 +138,50 @@
 @media (max-width: 820px) { .footer__grid { grid-template-columns: 1fr; gap: 28px; padding-block: 40px; } }
 
 .section__more { display: flex; justify-content: center; margin-top: 32px; }
+
+
+/* ---------- Fondos con textura (menos blanco) ---------- */
+/* Degradado lavanda suave con la Ψ del logo como marca de agua. */
+.section--tint {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(700px 360px at 100% 0%, rgba(169,155,201,.22), transparent 70%),
+    radial-gradient(600px 320px at 0% 100%, rgba(136,119,173,.14), transparent 70%),
+    linear-gradient(180deg, #fff 0%, var(--violet-50) 100%);
+}
+.section--tint::before {
+  content: ''; position: absolute; right: -90px; top: 24px; width: 440px; height: 440px;
+  background: url('/logo.png') no-repeat center / contain; opacity: .07; pointer-events: none;
+}
+.section--tint > .container { position: relative; }
+.section--tight { padding-block: 32px 64px; }
+
+.section--alt {
+  background:
+    radial-gradient(520px 280px at 0% 0%, rgba(136,119,173,.16), transparent 70%),
+    radial-gradient(520px 280px at 100% 100%, rgba(169,155,201,.20), transparent 70%),
+    var(--violet-50);
+}
+
+/* Franja de cierre */
+.cta-band {
+  position: relative; overflow: hidden; color: #fff;
+  background: linear-gradient(135deg, #3a3050 0%, var(--violet-700) 100%);
+  padding-block: 56px;
+}
+.cta-band::before {
+  content: ''; position: absolute; left: -60px; top: 50%; width: 320px; height: 320px; transform: translateY(-50%);
+  background: url('/logo.png') no-repeat center / contain; opacity: .10; pointer-events: none;
+}
+.cta-band__inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.cta-band h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 6px; color: #fff; }
+.cta-band p { margin: 0; color: #e6e1ef; max-width: 52ch; }
+.btn--light { background: #fff; color: var(--violet-800); }
+.btn--light:hover { background: var(--violet-50); }
+@media (max-width: 600px) { .cta-band { padding-block: 44px; } .cta-band__inner .btn { width: 100%; } }
+
+/* Cursos: lista directa */
+.page-header.page-header--compact { padding-block: 28px; }
+.page-header.page-header--compact h1::after { margin-top: 8px; }
+.cursos__ayuda { text-align: center; color: var(--muted); margin: 40px 0 0; }
+.cursos__ayuda a { color: var(--violet-700); font-weight: 600; text-decoration: underline; }
