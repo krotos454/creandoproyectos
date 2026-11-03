@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Award, MapPinned, Rocket, ArrowRight } from 'lucide-react'
+import { Award, Briefcase, Rocket, ArrowRight } from 'lucide-react'
 
 const items = [
   {
@@ -10,10 +10,10 @@ const items = [
     to: '/cursos?certificado=1',
   },
   {
-    icon: MapPinned,
-    title: 'Elegí cómo cursar',
-    text: 'Presencial, virtual o híbrido: filtrá los cursos por modalidad y encontrá el que mejor se adapte a vos.',
-    cta: 'Filtrar cursos',
+    icon: Briefcase,
+    title: 'Pensá en tu futuro profesional',
+    text: 'Formaciones pensadas para que puedas sumar herramientas aplicables al trabajo. En cada curso te contamos en qué ámbitos y actividades podés ponerlas en práctica.',
+    cta: 'Ver propuestas',
     to: '/cursos',
   },
   {

@@ -2,7 +2,7 @@ import { ListChecks, Users, Laptop, Award } from 'lucide-react'
 
 const features = [
   { icon: ListChecks, title: 'Información clara', text: 'Cada curso muestra programa, certificación, aranceles y contacto en un solo lugar.' },
-  { icon: Laptop, title: 'Presencial y online', text: 'Elegí la modalidad que mejor se adapte a tu rutina.' },
+  { icon: Laptop, title: 'Modalidad a la vista', text: 'Cada curso indica si se cursa de forma presencial, virtual o híbrida.' },
   { icon: Users, title: 'Acompañamiento', text: 'Te orientamos antes, durante y después de cada curso.' },
   { icon: Award, title: 'Certificación', text: 'Cursos con certificados que valoran en el mundo laboral.' },
 ]
