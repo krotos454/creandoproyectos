@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import Logo from './Logo.jsx'
+import Sello10 from './Sello10.jsx'
 import { menu } from '../config/site.js'
 
 export default function Header() {
@@ -51,6 +52,7 @@ export default function Header() {
               </li>
             ))}
           </ul>
+          <span className="sello10"><Sello10 /></span>
         </nav>
       </div>
     </header>

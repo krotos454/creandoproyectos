@@ -1,40 +1,36 @@
 import { Link } from 'react-router-dom'
-import { Mail, Phone, MapPin } from 'lucide-react'
-import Logo from './Logo.jsx'
+import { Facebook, Instagram, Lock } from 'lucide-react'
+import { WhatsAppLogo } from './WhatsAppBand.jsx'
 import { site, menu } from '../config/site.js'
 
 export default function Footer() {
+  const { facebook, instagram } = site.social ?? {}
   return (
     <footer className="footer">
-      <div className="container footer__grid">
-        <div>
-          <Logo light />
-          <p className="footer__about">
-            Cursos y formaciones para que des el próximo paso hacia tus proyectos.
-          </p>
-        </div>
-
-        <nav aria-label="Pie de página">
-          <h3>Navegación</h3>
-          <ul>
-            {menu.map((m) => (
-              <li key={m.to}><Link to={m.to}>{m.label}</Link></li>
-            ))}
-          </ul>
+      <div className="container footer__row">
+        <a className="footer__aviso" href={`https://wa.me/5491127016293?text=${encodeURIComponent('Hola, quiero consultar por los nuevos cursos de la plataforma de formación asincrónica.')}`} target="_blank" rel="noopener noreferrer">
+          <WhatsAppLogo />
+          <span className="footer__aviso-txt">
+            <small>Novedad</small>
+            <strong>Nuevos cursos de Plataforma de formación exclusivamente asincrónica</strong>
+          </span>
+          <span className="footer__aviso-btn">Consultá por WhatsApp</span>
+        </a>
+        <p className="footer__slogan">Cuando hay proyecto, hay vida.</p>
+        <nav className="footer__nav" aria-label="Pie de página">
+          {menu.map((m) => <Link key={m.to} to={m.to}>{m.label}</Link>)}
         </nav>
-
-        <div>
-          <h3>Contacto</h3>
-          <ul className="footer__contact">
-            <li><Mail size={16} /> <a href={`mailto:${site.email}`}>{site.email}</a></li>
-            <li><Phone size={16} /> <a href={`tel:${site.phone.replace(/[^+\d]/g, '')}`}>{site.phone}</a></li>
-            <li><MapPin size={16} /> {site.address}</li>
-          </ul>
-        </div>
+        {(facebook || instagram) && (
+          <div className="footer__social">
+            {facebook && <a href={facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook size={20} /></a>}
+            {instagram && <a href={instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={20} /></a>}
+          </div>
+        )}
       </div>
       <div className="footer__bottom">
-        <div className="container footer__bottom-row">
-          <span>© {new Date().getFullYear()} {site.name}. Todos los derechos reservados.</span>
+        <div className="container footer__legal">
+          <span>© {new Date().getFullYear()} CreandoProyectos. Todos los derechos reservados.</span>
+          <Link to="/profesor" className="footer__acceso" aria-label="Acceso para profesores"><Lock size={15} aria-hidden="true" /> Acceso profesores</Link>
         </div>
       </div>
     </footer>

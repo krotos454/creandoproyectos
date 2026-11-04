@@ -8,6 +8,9 @@ import './styles/global.css'
 import './styles/components.css'
 import './styles/pages.css'
 import './styles/panel.css'
+import './styles/catalogo.css'
+import './styles/tema.css'
+import './styles/nosotros.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

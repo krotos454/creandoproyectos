@@ -9,6 +9,8 @@ import Home from './pages/Home.jsx'
 import Cursos from './pages/Cursos.jsx'
 import CursoDetalle from './pages/CursoDetalle.jsx'
 import Contacto from './pages/Contacto.jsx'
+import Nosotros from './pages/Nosotros.jsx'
+import ProfesorEquipo from './pages/profesor/ProfesorEquipo.jsx'
 
 import ProfesorLogin from './pages/profesor/ProfesorLogin.jsx'
 import ProfesorCursos from './pages/profesor/ProfesorCursos.jsx'
@@ -32,6 +34,7 @@ export default function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/cursos" element={<Cursos />} />
           <Route path="/cursos/:id" element={<CursoDetalle />} />
           <Route path="/contacto" element={<Contacto />} />
@@ -43,6 +46,7 @@ export default function App() {
         <Route element={<RequireProfesor />}>
           <Route path="/profesor/panel" element={<ProfesorLayout />}>
             <Route index element={<ProfesorCursos />} />
+            <Route path="equipo" element={<ProfesorEquipo />} />
             <Route path="cursos/nuevo" element={<ProfesorCursoForm />} />
             <Route path="cursos/:id" element={<ProfesorCursoForm />} />
           </Route>

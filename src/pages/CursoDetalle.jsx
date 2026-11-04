@@ -14,6 +14,7 @@ export default function CursoDetalle() {
   )
 
   return (
+    <div className="nos nos--ficha">
     <section className="section container">
       <Link to="/cursos" className="back"><ArrowLeft size={16} /> Volver a cursos</Link>
       <DataState loading={loading} error={error} onRetry={reload}>
@@ -31,5 +32,6 @@ export default function CursoDetalle() {
         )}
       </DataState>
     </section>
+    </div>
   )
 }

@@ -1,17 +1,21 @@
 // Datos editables del sitio: nombre, menú y contacto.
 export const site = {
-  name: 'creandoproyectos',
+  name: 'CreandoProyectos',
   tagline: 'Plataforma educativa',
-  email: 'contacto@creandoproyectos.com',
-  phone: '+54 11 5555-0000',
-  address: 'Av. Principal 1234, Buenos Aires, Argentina',
+  // Correo institucional (ej.: 'info@tudominio.com'). Lo usa el botón «Enviar un correo» de Contacto.
+  email: '',
+  // WhatsApp institucional: es el que usan todos los botones de consulta del sitio.
+  whatsapp: '11 3605-2246',
+  // Redes sociales: se muestran en el pie SOLO si ponés la dirección real (ej.: 'https://instagram.com/tu_usuario').
+  social: { facebook: '', instagram: '' },
 }
 
-// El menú principal: exactamente estas 3 opciones y en este orden.
+// El menú principal.
 export const menu = [
   { label: 'Inicio', to: '/' },
   { label: 'Cursos', to: '/cursos' },
   { label: 'Contacto', to: '/contacto' },
+  { label: 'Sobre nosotros', to: '/nosotros' },
 ]
 
 // Foto del banner de la página de inicio (Unsplash, hotlink). Para usar una imagen propia,

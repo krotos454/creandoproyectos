@@ -1,67 +1,70 @@
-import { useState } from 'react'
+import { ArrowRight, Mail, MessageCircle } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
-import { Mail, Phone, MapPin } from 'lucide-react'
-import PageHeader from '../components/PageHeader.jsx'
+import { WhatsAppLogo, numeroWhatsApp } from '../components/WhatsAppBand.jsx'
 import { site } from '../config/site.js'
+import { useAsync } from '../lib/useAsync.js'
+import { isSupabaseConfigured } from '../lib/supabase.js'
+import { listarCursosPublicos } from '../lib/api.js'
 
+// Contacto: solo dos vías (WhatsApp y correo). Sin formularios ni datos inventados.
 export default function Contacto() {
   const [params] = useSearchParams()
-  const cursoInicial = params.get('curso') || ''
-  const [sent, setSent] = useState(false)
+  const curso = (params.get('curso') || '').slice(0, 120)
+  const { data } = useAsync(
+    () => (isSupabaseConfigured ? listarCursosPublicos() : Promise.resolve([])),
+    []
+  )
 
-  // Sin backend por ahora: abre el cliente de correo con el mensaje armado.
-  // Más adelante se puede reemplazar por Supabase o un servicio de formularios.
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const f = new FormData(e.currentTarget)
-    const asunto = f.get('curso') ? `Consulta: ${f.get('curso')}` : 'Consulta desde el sitio'
-    const cuerpo = `Nombre: ${f.get('nombre')}\nEmail: ${f.get('email')}\nTeléfono: ${f.get('telefono') || '-'}\n\n${f.get('mensaje')}`
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`
-    setSent(true)
-  }
+  const wa = numeroWhatsApp(data ?? [])
+  const mensaje = curso
+    ? `Hola, quiero consultar por el curso ${curso}.`
+    : 'Hola, quiero consultar por los cursos de CreandoProyectos.'
+  const hrefWa = wa ? `${wa}?text=${encodeURIComponent(mensaje)}` : ''
+
+  const email = (site.email || '').trim()
+  const asunto = curso ? `Consulta: ${curso}` : 'Consulta desde el sitio'
+  const hrefMail = email ? `mailto:${email}?subject=${encodeURIComponent(asunto)}` : ''
 
   return (
-    <>
-      <PageHeader title="Contacto" subtitle="Escribinos y te respondemos a la brevedad." />
-      <section className="section container contact">
-        <form className="form" onSubmit={onSubmit}>
-          <label>
-            Nombre
-            <input name="nombre" type="text" required autoComplete="name" />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" required autoComplete="email" />
-          </label>
-          <label>
-            Teléfono (opcional)
-            <input name="telefono" type="tel" autoComplete="tel" />
-          </label>
-          <label>
-            Curso de interés (opcional)
-            <input name="curso" type="text" defaultValue={cursoInicial} />
-          </label>
-          <label>
-            Mensaje
-            <textarea name="mensaje" rows="5" required />
-          </label>
-          <button type="submit" className="btn btn--primary">Enviar consulta</button>
-          {sent && (
-            <p className="form__ok" role="status">
-              Se abrió tu aplicación de correo con el mensaje listo para enviar.
-            </p>
-          )}
-        </form>
-
-        <aside className="contact__info">
-          <h2>Datos de contacto</h2>
-          <ul>
-            <li><Mail size={20} /> <a href={`mailto:${site.email}`}>{site.email}</a></li>
-            <li><Phone size={20} /> <a href={`tel:${site.phone.replace(/[^+\d]/g, '')}`}>{site.phone}</a></li>
-            <li><MapPin size={20} /> {site.address}</li>
-          </ul>
-        </aside>
+    <div className="contacto">
+      <section className="chero" aria-labelledby="chero-title">
+        <img className="chero__marca" src="/logo.png" alt="" aria-hidden="true" width="420" height="420" decoding="async" />
+        <div className="container chero__inner">
+          <span className="chero__kicker">Contacto</span>
+          <h1 id="chero-title">Hablemos de tu próximo proyecto.</h1>
+          <p>¿Querés información sobre nuestros cursos o tenés alguna consulta? Elegí cómo comunicarte con nosotros.</p>
+        </div>
       </section>
-    </>
+
+      <section className="container cvias" aria-label="Formas de contacto">
+        <article className="cvia cvia--wa">
+          <span className="cvia__icon"><WhatsAppLogo /></span>
+          <h2>Escribinos por WhatsApp</h2>
+          <p>Recibí atención directa y consultanos lo que necesites.</p>
+          {hrefWa ? (
+            <a className="cvia__btn" href={hrefWa} target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={22} /> Contactar por WhatsApp <ArrowRight size={18} />
+            </a>
+          ) : (
+            <span className="cvia__btn cvia__btn--off" aria-disabled="true">Próximamente</span>
+          )}
+        </article>
+
+        <article className="cvia cvia--mail">
+          <span className="cvia__icon cvia__icon--mail"><Mail size={44} strokeWidth={1.6} /></span>
+          <h2>Contactanos por correo</h2>
+          <p>Mandanos tu consulta y te responderemos a la brevedad.</p>
+          {hrefMail ? (
+            <a className="cvia__btn" href={hrefMail}>
+              <Mail size={22} /> Enviar un correo <ArrowRight size={18} />
+            </a>
+          ) : (
+            <span className="cvia__btn cvia__btn--off" aria-disabled="true">Próximamente</span>
+          )}
+        </article>
+      </section>
+
+      <p className="cfrase">Cuando hay proyecto, hay vida.</p>
+    </div>
   )
 }

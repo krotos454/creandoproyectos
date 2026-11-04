@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, MessageCircle } from 'lucide-react'
 
-// Portada: texto a la izquierda y el logo grande a la derecha, sobre un fondo lavanda suave.
-// No depende de fotos ni de flyers.
+// Portada: fondo lavanda con ondas, título y botones a la izquierda, logo grande a la derecha.
 export default function Hero() {
   return (
     <section className="hero hero--logo" aria-labelledby="hero-title">
@@ -12,6 +11,9 @@ export default function Hero() {
             <span>Cuando hay proyecto,</span>
             <span>hay vida.</span>
           </h1>
+          <svg className="hero__swoosh" viewBox="0 0 260 16" aria-hidden="true">
+            <path d="M2 12 C 60 2, 120 2, 190 8 S 245 8, 258 4" fill="none" stroke="#6b5a91" strokeWidth="3" strokeLinecap="round" />
+          </svg>
           <p>
             Encontrá cursos, conocé cada propuesta y animate a dar el próximo paso
             hacia tus objetivos.
@@ -20,8 +22,8 @@ export default function Hero() {
             <Link to="/cursos" className="btn btn--primary">
               Ver cursos <ArrowRight size={18} />
             </Link>
-            <Link to="/contacto" className="btn btn--outline">
-              Consultanos
+            <Link to="/contacto" className="btn btn--outline hero__contact">
+              <MessageCircle size={20} /> Contactanos
             </Link>
           </div>
         </div>

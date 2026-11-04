@@ -1,4 +1,5 @@
 import { parsearTelefonos } from './format.js'
+import { normalizarVideo, parsearVideo } from './video.js'
 
 const reLink = /^(https?:\/\/|mailto:|tel:)/i
 
@@ -18,6 +19,7 @@ export const CURSO_VACIO = {
   imagen_miniatura_key: '',
   imagen_original_key: '',
   imagen_nombre: '',
+  videos: [], // opcional: enlaces de YouTube o Vimeo
   // B. Características
   duracion: '',
   modalidad: '',
@@ -64,6 +66,8 @@ export function validarCurso(v, modo) {
   if (!esMonto(v.cuota_mensual)) e.cuota_mensual = 'Ingresá un importe válido (0 o más).'
   if (v.enlace_inscripcion && !reLink.test(v.enlace_inscripcion.trim()))
     e.enlace_inscripcion = 'Debe empezar con https://, http://, mailto: o tel:'
+  if ((v.videos ?? []).some((x) => String(x).trim() && !parsearVideo(x)))
+    e.videos = 'Algún enlace de video no es válido. Pegá un enlace de YouTube o Vimeo (por ejemplo: https://www.youtube.com/watch?v=...).'
   if (v.whatsapp.trim() && parsearTelefonos(v.whatsapp).length === 0)
     e.whatsapp = 'Escribí al menos un número de teléfono (por ejemplo: 11 2345-6789).'
   if (v.etapas.some((x) => x.detalle.trim() && !x.titulo.trim()))
@@ -114,6 +118,8 @@ export function cursoAPayload(v) {
     imagen_miniatura_key: txt(v.imagen_miniatura_key),
     imagen_original_key: txt(v.imagen_original_key),
     imagen_nombre: txt(v.imagen_nombre),
+    videos: (v.videos ?? []).map(normalizarVideo).filter(Boolean).slice(0, 10),
+    video_url: null,
     duracion: txt(v.duracion),
     modalidad: v.modalidad || null,
     inicio: txt(v.inicio),
@@ -152,6 +158,7 @@ export function cursoAFormulario(c) {
   out.certificaciones = (Array.isArray(c.certificaciones) ? c.certificaciones : []).map((x) => ({
     nombre: x.nombre ?? '', anio: x.anio ?? '', entidad: x.entidad ?? '',
   }))
+  out.videos = Array.isArray(c.videos) && c.videos.length ? [...c.videos] : c.video_url ? [c.video_url] : []
   out.salidas_ambitos = (c.salidas_ambitos ?? []).join('\n')
   out.salidas_actividades = (c.salidas_actividades ?? []).join('\n')
   return out

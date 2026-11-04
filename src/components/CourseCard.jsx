@@ -1,48 +1,38 @@
 import { Link } from 'react-router-dom'
-import { Award, Clock, ImageIcon, Monitor } from 'lucide-react'
-import { MODALIDADES, resumenAranceles } from '../lib/format.js'
+import { Clock, ImageIcon, Monitor, Wallet } from 'lucide-react'
+import { MODALIDADES, resumenAranceles, tieneAranceles } from '../lib/format.js'
 
-// Tarjeta del catálogo pensada para flyers verticales (proporción 7:10).
-// El flyer se muestra completo (object-fit: contain) sobre un fondo neutro.
+// Tarjeta compacta del catálogo: flyer completo (object-fit: contain), etiqueta encima,
+// y debajo nombre, duración, modalidad, precio y botón.
 export default function CourseCard({ curso }) {
   const c = curso
   const miniatura = c.imagen_miniatura_url || c.imagen_url
-  const aranceles = resumenAranceles(c)
+  const precio = tieneAranceles(c) ? resumenAranceles(c).principal : ''
+  const href = `/cursos/${c.id}`
   return (
     <article className="fcard">
-      <Link to={`/cursos/${c.id}`} className="fcard__media" aria-label={`Ver el curso ${c.nombre}`}>
-        {miniatura ? (
-          <img
-            src={miniatura}
-            alt={`Flyer del curso ${c.nombre}`}
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="860"
-          />
-        ) : (
-          <span className="fcard__vacio">
-            <ImageIcon size={30} />
-            <strong>{c.nombre}</strong>
-            <small>Flyer próximamente</small>
-          </span>
-        )}
-        {c.es_demo && <span className="fcard__demo">Ejemplo</span>}
+      <Link to={href} className="fcard__media" aria-label={`Ver el curso ${c.nombre}`}>
+        <span className="fcard__flyer">
+          {miniatura ? (
+            <img src={miniatura} alt={`Flyer del curso ${c.nombre}`} loading="lazy" decoding="async" width="600" height="860" />
+          ) : (
+            <span className="fcard__vacio">
+              <ImageIcon size={26} />
+              <strong>{c.nombre}</strong>
+              <small>Flyer próximamente</small>
+            </span>
+          )}
+        </span>
+        {c.categorias?.nombre && <span className="fcard__tag">{c.categorias.nombre}</span>}
       </Link>
       <div className="fcard__body">
-        <div className="card__tags">
-          {c.categorias?.nombre && <span className="tag">{c.categorias.nombre}</span>}
-          {c.ofrece_certificado && <span className="tag tag--cert"><Award size={12} /> Con certificado</span>}
-        </div>
         <h2 className="fcard__title">{c.nombre}</h2>
-        {c.descripcion_breve && <p className="fcard__desc">{c.descripcion_breve}</p>}
-        <p className="card__meta"><Monitor size={16} /> {MODALIDADES[c.modalidad]}</p>
-        {c.duracion && <p className="card__meta"><Clock size={16} /> {c.duracion}</p>}
-        <div className="fcard__price">
-          <strong>{aranceles.principal}</strong>
-          {aranceles.secundario && <small>{aranceles.secundario}</small>}
-        </div>
-        <Link to={`/cursos/${c.id}`} className="btn btn--primary">Ver curso</Link>
+        <ul className="fcard__meta">
+          {c.duracion && <li><Clock size={16} /> <span>{c.duracion}</span></li>}
+          {c.modalidad && <li><Monitor size={16} /> <span>{MODALIDADES[c.modalidad]}</span></li>}
+          {precio && <li className="fcard__precio"><Wallet size={16} /> <span>{precio}</span></li>}
+        </ul>
+        <Link to={href} className="btn btn--primary">Ver detalles</Link>
       </div>
     </article>
   )

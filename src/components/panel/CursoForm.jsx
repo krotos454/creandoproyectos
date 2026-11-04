@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react'
-import { Save, Send, Eye, EyeOff } from 'lucide-react'
+import { Save, Send, Eye, EyeOff, Clapperboard } from 'lucide-react'
 import Field from './Field.jsx'
 import FlyerUpload from './FlyerUpload.jsx'
 import Repetible from './Repetible.jsx'
 import Modal from '../Modal.jsx'
+import VideoDemo from '../VideoDemo.jsx'
+import { parsearVideo } from '../../lib/video.js'
 import CourseView from '../CourseView.jsx'
 import { CERTIFICACION_VACIA, ETAPA_VACIA, cursoAPayload, validarCurso } from '../../lib/validation.js'
 import { subirFlyer, borrarImagenes, clavesDeCurso } from '../../lib/storage.js'
@@ -114,6 +116,35 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
             }))
           }}
         />
+
+        <div className="videobox">
+          <div className="videobox__head">
+            <span className="videobox__icon"><Clapperboard size={22} /></span>
+            <div>
+              <strong>Videos de demostración <em>(opcional)</em></strong>
+              <small>Podés sumar todos los videos que quieras. Aparecen en la ficha del curso, después del flyer.</small>
+            </div>
+          </div>
+          {(v.videos ?? []).map((url, k) => (
+            <div className="videobox__item" key={k}>
+              <div className="videobox__row">
+                <input type="url" inputMode="url" aria-label={`Enlace del video ${k + 1}`} placeholder="https://www.youtube.com/watch?v=..." value={url} maxLength={300}
+                  onChange={(e) => setV((p) => ({ ...p, videos: p.videos.map((x, j) => (j === k ? e.target.value : x)) }))} />
+                <button type="button" className="btn btn--outline btn--sm" onClick={() => setV((p) => ({ ...p, videos: p.videos.filter((_, j) => j !== k) }))}>Quitar</button>
+              </div>
+              {parsearVideo(url) && <VideoDemo url={url} />}
+            </div>
+          ))}
+          {errores.videos && <p className="form__error">{errores.videos}</p>}
+          {(v.videos ?? []).length < 10 && (
+            <button type="button" className="btn btn--outline" onClick={() => setV((p) => ({ ...p, videos: [...(p.videos ?? []), ''] }))}>+ Agregar un video</button>
+          )}
+          <ol className="videobox__pasos">
+            <li>Subí tu video a <strong>YouTube</strong>. Elegí la visibilidad <strong>«No listado»</strong> si querés que solo lo vea quien entre a este curso.</li>
+            <li>Copiá el enlace del video y pegalo en un casillero.</li>
+            <li>Para sacar un video, tocá «Quitar».</li>
+          </ol>
+        </div>
       </fieldset>
 
       <fieldset>
