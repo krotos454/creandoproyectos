@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
-import { Award, Clock, MessageCircle, Monitor, Wallet } from 'lucide-react'
+import { Briefcase, Clock, MessageCircle, Monitor, Wallet } from 'lucide-react'
 import { site } from '../config/site.js'
 import MediaCarousel from './MediaCarousel.jsx'
 import { MODALIDADES, formatMonto, parsearTelefonos } from '../lib/format.js'
 
 const lleno = (x) => !!String(x ?? '').trim()
-const lista = (x) => (Array.isArray(x) ? x.filter((i) => (typeof i === 'string' ? lleno(i) : i)) : [])
 
 // Vista completa de un curso. La usan la página pública y la vista previa del panel.
 // En escritorio: el flyer a la izquierda y la información a la derecha.
@@ -13,15 +12,11 @@ const lista = (x) => (Array.isArray(x) ? x.filter((i) => (typeof i === 'string' 
 // Las secciones sin datos no se muestran. Todo está también en texto: no depende de la imagen.
 export default function CourseView({ curso, categoria }) {
   const c = curso
-  const certificaciones = lista(c.certificaciones).filter((x) => lleno(x.nombre))
-  const ambitos = lista(c.salidas_ambitos)
-  const actividades = lista(c.salidas_actividades)
   const hayMatricula = c.matricula !== null && c.matricula !== undefined && c.matricula !== ''
   const hayCuota = c.cuota_mensual !== null && c.cuota_mensual !== undefined && c.cuota_mensual !== ''
   const telefonos = parsearTelefonos(c.whatsapp)
 
   const hayModalidad = lleno(c.duracion) || c.modalidad
-  const haySalidas = lleno(c.salidas_descripcion) || ambitos.length > 0 || actividades.length > 0
   const hayPrecio = c.es_gratuito || hayMatricula || hayCuota
   const wa = parsearTelefonos(site.whatsapp).find((t) => t.whatsapp)?.whatsapp
     || telefonos.find((t) => t.whatsapp)?.whatsapp
@@ -38,7 +33,6 @@ export default function CourseView({ curso, categoria }) {
         <header className="cview__head">
           <div className="card__tags">
             {categoria && <span className="tag">{categoria}</span>}
-            {certificaciones.length > 0 && <span className="tag tag--cert"><Award size={12} /> Con certificado</span>}
           </div>
           <h1>{c.nombre || 'Nombre del curso'}</h1>
           {hrefWa ? (
@@ -60,6 +54,13 @@ export default function CourseView({ curso, categoria }) {
             </section>
           )}
 
+          {lleno(c.salidas_descripcion) && (
+            <section className="cseccion cseccion--salida">
+              <h2><Briefcase size={16} /> Salida laboral</h2>
+              <p className="prewrap">{c.salidas_descripcion}</p>
+            </section>
+          )}
+
           {(hayModalidad || hayPrecio) && (
             <section className="cseccion">
               <ul className="cview__facts">
@@ -72,34 +73,6 @@ export default function CourseView({ curso, categoria }) {
             </section>
           )}
 
-          {certificaciones.length > 0 && (
-            <section className="cseccion">
-              <h2>Certificación</h2>
-              <ul className="certs">
-                {certificaciones.map((x, i) => (
-                  <li key={i}>
-                    <Award size={20} />
-                    <span>
-                      <strong>{x.nombre}</strong>
-                      {lleno(x.entidad) && <small>Entidad certificadora: {x.entidad}</small>}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {haySalidas && (
-            <section className="cseccion">
-              <h2>Salida laboral</h2>
-              {lleno(c.salidas_descripcion) && <p className="prewrap">{c.salidas_descripcion}</p>}
-              {(ambitos.length > 0 || actividades.length > 0) && (
-                <ul className="pills">
-                  {[...ambitos, ...actividades].map((a, i) => <li key={i}>{a}</li>)}
-                </ul>
-              )}
-            </section>
-          )}
         </div>
       </div>
     </article>

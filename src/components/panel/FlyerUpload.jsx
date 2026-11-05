@@ -65,7 +65,7 @@ export default function FlyerUpload({ url, pendiente, onSeleccionar, onQuitar, o
       <div className="upload__actions">
         <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile} hidden />
         <button type="button" className="btn btn--outline btn--sm" onClick={() => input.current?.click()} disabled={procesando}>
-          <ImagePlus size={16} /> {src ? 'Reemplazar flyer' : 'Subir flyer'}
+          <ImagePlus size={16} /> {src ? 'Cambiar foto' : 'Subir foto'}
         </button>
         {src && !procesando && (
           <button type="button" className="btn btn--outline btn--sm btn--danger-outline" onClick={onQuitar}>
@@ -87,8 +87,7 @@ export default function FlyerUpload({ url, pendiente, onSeleccionar, onQuitar, o
       )}
       {pendiente && <p className="hint">Esta imagen se sube cuando guardes o publiques el curso.</p>}
 
-      <small className="hint">Formato recomendado: imagen vertical de aproximadamente 1017 x 1459 píxeles.</small>
-      <small className="hint">JPG, PNG o WEBP de hasta 8 MB. No hace falta recortarla: se muestra completa. Guardamos tu archivo original y generamos versiones optimizadas para que el sitio cargue rápido.</small>
+      <small className="hint">Imagen vertical (JPG, PNG o WEBP).</small>
       {error && <span className="field-error" role="alert">{error}</span>}
     </div>
   )

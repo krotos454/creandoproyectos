@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 // Sello "10 años": corona de laureles, cinco estrellas y el número grande, en violeta.
 const estrella = (cx, cy, r) => {
   const p = []
@@ -34,24 +36,26 @@ function hojas() {
 }
 
 export default function Sello10({ className = '' }) {
+  const gid = 's10g' + useId().replace(/:/g, '')
   return (
     <svg className={className} viewBox="0 0 200 210" role="img" aria-label="10 años" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="s10g" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#7e68b0" />
           <stop offset="1" stopColor="#4b3a72" />
         </linearGradient>
       </defs>
-      <g fill="url(#s10g)">
+      <g fill={`url(#${gid})`}>
         {hojas()}
         <polygon points={estrella(100, 22, 12)} />
         <polygon points={estrella(70, 30, 8.5)} />
         <polygon points={estrella(130, 30, 8.5)} />
         <polygon points={estrella(46, 46, 6.5)} />
         <polygon points={estrella(154, 46, 6.5)} />
-        <text x="100" y="128" textAnchor="middle" fontSize="92" fontWeight="900" fontFamily="Inter, Arial, sans-serif" letterSpacing="-6">10</text>
+        <text x="100" y="124" textAnchor="middle" fontSize="92" fontWeight="900" fontFamily="Inter, Arial, sans-serif" letterSpacing="-6">10</text>
       </g>
-      <text x="100" y="158" textAnchor="middle" fontSize="23" fontWeight="700" letterSpacing="5" fill="#4b3a72" fontFamily="Georgia, 'Times New Roman', serif">AÑOS</text>
+      <rect x="40" y="136" width="120" height="38" rx="8" fill="#4b3a72" stroke="#fff" strokeWidth="3" />
+      <text x="100" y="164" textAnchor="middle" fontSize="28" fontWeight="800" letterSpacing="5" fill="#fff" fontFamily="Inter, Arial, sans-serif">AÑOS</text>
     </svg>
   )
 }

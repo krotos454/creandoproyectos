@@ -2,12 +2,11 @@ import { useRef, useState } from 'react'
 import { Save, Send, Eye, EyeOff, Clapperboard } from 'lucide-react'
 import Field from './Field.jsx'
 import FlyerUpload from './FlyerUpload.jsx'
-import Repetible from './Repetible.jsx'
 import Modal from '../Modal.jsx'
 import VideoDemo from '../VideoDemo.jsx'
 import { parsearVideo } from '../../lib/video.js'
 import CourseView from '../CourseView.jsx'
-import { CERTIFICACION_VACIA, ETAPA_VACIA, cursoAPayload, validarCurso } from '../../lib/validation.js'
+import { cursoAPayload, validarCurso } from '../../lib/validation.js'
 import { subirFlyer, borrarImagenes, clavesDeCurso } from '../../lib/storage.js'
 import { useToast } from '../../context/ToastContext.jsx'
 import { ESTADOS, mensajeError } from '../../lib/format.js'
@@ -79,21 +78,17 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
 
   const categoriaNombre = categorias.find((c) => String(c.id) === String(v.categoria_id))?.nombre
   const publicado = v.estado === 'publicado'
-  const virtual = v.modalidad === 'virtual'
 
   return (
     <form className="form cform" noValidate onSubmit={(e) => e.preventDefault()}>
       {!esNuevo && <p className="hint">Estado actual: <strong>{ESTADOS[v.estado]}</strong></p>}
 
       <fieldset>
-        <legend>A. Información general</legend>
+        <legend>Datos del curso</legend>
         <Field label="Nombre del curso" required error={errores.nombre}>
           <input type="text" value={v.nombre} onChange={set('nombre')} maxLength={150} aria-invalid={!!errores.nombre} />
         </Field>
-        <Field label="Descripción breve" error={errores.descripcion_breve} hint={`${v.descripcion_breve.length}/300 · Aparece en las tarjetas del catálogo.`}>
-          <textarea rows="2" value={v.descripcion_breve} onChange={set('descripcion_breve')} maxLength={300} aria-invalid={!!errores.descripcion_breve} />
-        </Field>
-        <Field label="Descripción completa" error={errores.descripcion_completa} hint="De qué trata el curso, objetivos, a quién está dirigido.">
+        <Field label="Descripción" required error={errores.descripcion_completa}>
           <textarea rows="7" value={v.descripcion_completa} onChange={set('descripcion_completa')} maxLength={8000} aria-invalid={!!errores.descripcion_completa} />
         </Field>
         <Field label="Categoría" error={errores.categoria_id}>
@@ -120,10 +115,7 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
         <div className="videobox">
           <div className="videobox__head">
             <span className="videobox__icon"><Clapperboard size={22} /></span>
-            <div>
-              <strong>Videos de demostración <em>(opcional)</em></strong>
-              <small>Podés sumar todos los videos que quieras. Aparecen en la ficha del curso, después del flyer.</small>
-            </div>
+            <strong>Videos <em>(opcional, enlaces de YouTube o Vimeo)</em></strong>
           </div>
           {(v.videos ?? []).map((url, k) => (
             <div className="videobox__item" key={k}>
@@ -137,20 +129,15 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
           ))}
           {errores.videos && <p className="form__error">{errores.videos}</p>}
           {(v.videos ?? []).length < 10 && (
-            <button type="button" className="btn btn--outline" onClick={() => setV((p) => ({ ...p, videos: [...(p.videos ?? []), ''] }))}>+ Agregar un video</button>
+            <button type="button" className="btn btn--outline" onClick={() => setV((p) => ({ ...p, videos: [...(p.videos ?? []), ''] }))}>+ Subir video</button>
           )}
-          <ol className="videobox__pasos">
-            <li>Subí tu video a <strong>YouTube</strong>. Elegí la visibilidad <strong>«No listado»</strong> si querés que solo lo vea quien entre a este curso.</li>
-            <li>Copiá el enlace del video y pegalo en un casillero.</li>
-            <li>Para sacar un video, tocá «Quitar».</li>
-          </ol>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>B. Características</legend>
+        <legend>Modalidad y duración</legend>
         <div className="form-grid">
-          <Field label="Modalidad" error={errores.modalidad}>
+          <Field label="Modalidad" required error={errores.modalidad}>
             <select value={v.modalidad} onChange={set('modalidad')} aria-invalid={!!errores.modalidad}>
               <option value="">Elegí la modalidad</option>
               <option value="presencial">Presencial</option>
@@ -158,117 +145,30 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
               <option value="hibrida">Híbrida (presencial y virtual)</option>
             </select>
           </Field>
-          <Field label="Duración" error={errores.duracion} hint="Ejemplo: 3 meses, 3 años.">
+          <Field label="Duración" required error={errores.duracion} hint="Ejemplo: 3 meses, 3 años.">
             <input type="text" value={v.duracion} onChange={set('duracion')} maxLength={100} aria-invalid={!!errores.duracion} />
           </Field>
-          <Field label="Inicio (opcional)" hint="Ejemplo: Marzo de 2027.">
-            <input type="text" value={v.inicio} onChange={set('inicio')} maxLength={100} />
-          </Field>
-          {!virtual && (
-            <Field label="Ubicación" error={errores.ubicacion} hint="Dirección donde se dicta. Se muestra en “Lugar de cursada”.">
-              <input type="text" value={v.ubicacion} onChange={set('ubicacion')} maxLength={200} aria-invalid={!!errores.ubicacion} />
-            </Field>
-          )}
         </div>
-        <Field label="Horarios (opcional)">
-          <textarea rows="2" value={v.horarios} onChange={set('horarios')} maxLength={500} />
+        <Field label="Salida laboral (opcional)" hint="Una o dos líneas. Si lo dejás vacío no se muestra.">
+          <textarea rows="3" value={v.salidas_descripcion} onChange={set('salidas_descripcion')} maxLength={600} />
         </Field>
       </fieldset>
 
       <fieldset>
-        <legend>C. Programa y certificaciones</legend>
-        <Repetible
-          titulo="Etapas de formación (opcional)"
-          ayuda="Por ejemplo: Primer año, Segundo año, o los módulos del curso."
-          items={v.etapas}
-          onChange={(etapas) => setV((x) => ({ ...x, etapas }))}
-          vacio={ETAPA_VACIA}
-          agregar="Agregar etapa"
-          error={errores.etapas}
-        >
-          {(it, cambiar, i) => (
-            <>
-              <input type="text" value={it.titulo} onChange={(e) => cambiar('titulo', e.target.value)} placeholder={`Título de la etapa ${i + 1}`} maxLength={150} aria-label={`Título de la etapa ${i + 1}`} />
-              <textarea rows="2" value={it.detalle} onChange={(e) => cambiar('detalle', e.target.value)} placeholder="Qué se ve o qué se obtiene (opcional)" maxLength={600} aria-label={`Detalle de la etapa ${i + 1}`} />
-            </>
-          )}
-        </Repetible>
-        <Repetible
-          titulo="Certificaciones (opcional)"
-          ayuda="Si el curso entrega certificados, agregá cada uno con el año en que se obtiene y quién lo emite."
-          items={v.certificaciones}
-          onChange={(certificaciones) => setV((x) => ({ ...x, certificaciones }))}
-          vacio={CERTIFICACION_VACIA}
-          agregar="Agregar certificación"
-          error={errores.certificaciones}
-        >
-          {(it, cambiar, i) => (
-            <>
-              <input type="text" value={it.nombre} onChange={(e) => cambiar('nombre', e.target.value)} placeholder="Nombre del certificado" maxLength={150} aria-label={`Nombre de la certificación ${i + 1}`} />
-              <div className="form-grid">
-                <input type="text" value={it.anio} onChange={(e) => cambiar('anio', e.target.value)} placeholder="Año en que se obtiene (ej.: Segundo año)" maxLength={60} aria-label={`Año de la certificación ${i + 1}`} />
-                <input type="text" value={it.entidad} onChange={(e) => cambiar('entidad', e.target.value)} placeholder="Entidad certificadora" maxLength={150} aria-label={`Entidad certificadora ${i + 1}`} />
-              </div>
-            </>
-          )}
-        </Repetible>
-      </fieldset>
-
-      <fieldset>
-        <legend>D. Salidas laborales (opcional)</legend>
-        <p className="hint">Si no completás nada, esta sección no se muestra en el sitio.</p>
-        <Field label="Descripción general">
-          <textarea rows="3" value={v.salidas_descripcion} onChange={set('salidas_descripcion')} maxLength={2000} />
-        </Field>
-        <Field label="Ámbitos laborales" hint="Uno por línea.">
-          <textarea rows="4" value={v.salidas_ambitos} onChange={set('salidas_ambitos')} placeholder={'Consultorías\nTrabajo comunitario'} />
-        </Field>
-        <Field label="Actividades profesionales" hint="Una por línea.">
-          <textarea rows="4" value={v.salidas_actividades} onChange={set('salidas_actividades')} />
-        </Field>
-      </fieldset>
-
-      <fieldset>
-        <legend>E. Inscripción y aranceles</legend>
-        <p className="hint">La matrícula es solo un importe de inscripción: no se piden requisitos ni documentación.</p>
+        <legend>Precio</legend>
         <label className="toggle">
           <input type="checkbox" checked={v.es_gratuito} onChange={set('es_gratuito')} />
           Es un curso gratuito
         </label>
         {!v.es_gratuito && (
-          <>
-            <div className="form-grid">
-              <Field label="Valor de la matrícula ($)" error={errores.matricula}>
-                <input type="number" min="0" step="0.01" inputMode="decimal" value={v.matricula} onChange={set('matricula')} aria-invalid={!!errores.matricula} />
-              </Field>
-              <Field label="Valor de la cuota mensual ($)" error={errores.cuota_mensual}>
-                <input type="number" min="0" step="0.01" inputMode="decimal" value={v.cuota_mensual} onChange={set('cuota_mensual')} aria-invalid={!!errores.cuota_mensual} />
-              </Field>
-            </div>
-            <Field label="Medios de pago (opcional)" hint="Ejemplo: efectivo, transferencia, tarjeta.">
-              <textarea rows="2" value={v.medios_pago} onChange={set('medios_pago')} maxLength={500} />
+          <div className="form-grid">
+            <Field label="Matrícula de inscripción ($)" error={errores.matricula}>
+              <input type="number" min="0" step="0.01" inputMode="decimal" value={v.matricula} onChange={set('matricula')} aria-invalid={!!errores.matricula} />
             </Field>
-          </>
-        )}
-        <Field label="Información adicional (opcional)">
-          <textarea rows="3" value={v.info_adicional} onChange={set('info_adicional')} maxLength={1000} />
-        </Field>
-      </fieldset>
-
-      <fieldset>
-        <legend>F. Contacto y publicación</legend>
-        <Field label="WhatsApp" error={errores.whatsapp} hint="Podés poner más de un número separados por “/”. Ejemplo: 11 2345-6789 / 11 9876-5432">
-          <input type="text" inputMode="tel" value={v.whatsapp} onChange={set('whatsapp')} maxLength={120} aria-invalid={!!errores.whatsapp} />
-        </Field>
-        <Field label="Enlace de inscripción (opcional)" error={errores.enlace_inscripcion}
-          hint="Una página web o formulario (https://...), mailto:correo@ejemplo.com o tel:+54...">
-          <input type="text" inputMode="url" value={v.enlace_inscripcion} onChange={set('enlace_inscripcion')} placeholder="https://" aria-invalid={!!errores.enlace_inscripcion} />
-        </Field>
-        {inicial.es_demo && (
-          <label className="toggle">
-            <input type="checkbox" checked={v.es_demo} onChange={set('es_demo')} />
-            Este curso es un ejemplo demostrativo (se muestra con la etiqueta “Ejemplo”)
-          </label>
+            <Field label="Cuota mensual ($)" error={errores.cuota_mensual}>
+              <input type="number" min="0" step="0.01" inputMode="decimal" value={v.cuota_mensual} onChange={set('cuota_mensual')} aria-invalid={!!errores.cuota_mensual} />
+            </Field>
+          </div>
         )}
       </fieldset>
 

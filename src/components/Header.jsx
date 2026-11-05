@@ -24,6 +24,8 @@ export default function Header() {
       <div className="header__inner container">
         <Logo />
 
+        <span className="sello10 sello10--bar"><Sello10 /></span>
+
         <button
           className="header__toggle"
           onClick={() => setOpen((v) => !v)}
@@ -52,7 +54,7 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <span className="sello10"><Sello10 /></span>
+          <span className="sello10 sello10--nav"><Sello10 /></span>
         </nav>
       </div>
     </header>

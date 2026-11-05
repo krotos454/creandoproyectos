@@ -1,7 +1,5 @@
-import { parsearTelefonos } from './format.js'
 import { normalizarVideo, parsearVideo } from './video.js'
 
-const reLink = /^(https?:\/\/|mailto:|tel:)/i
 
 export const ETAPA_VACIA = { titulo: '', detalle: '' }
 export const CERTIFICACION_VACIA = { nombre: '', anio: '', entidad: '' }
@@ -60,33 +58,17 @@ export function validarCurso(v, modo) {
   else if (v.nombre.trim().length < 3) e.nombre = 'El nombre debe tener al menos 3 letras.'
   else if (v.nombre.length > 150) e.nombre = 'El nombre es demasiado largo (máximo 150).'
 
-  if (v.descripcion_breve.length > 300) e.descripcion_breve = 'Máximo 300 caracteres.'
   if (v.descripcion_completa.length > 8000) e.descripcion_completa = 'Máximo 8000 caracteres.'
   if (!esMonto(v.matricula)) e.matricula = 'Ingresá un importe válido (0 o más).'
   if (!esMonto(v.cuota_mensual)) e.cuota_mensual = 'Ingresá un importe válido (0 o más).'
-  if (v.enlace_inscripcion && !reLink.test(v.enlace_inscripcion.trim()))
-    e.enlace_inscripcion = 'Debe empezar con https://, http://, mailto: o tel:'
   if ((v.videos ?? []).some((x) => String(x).trim() && !parsearVideo(x)))
     e.videos = 'Algún enlace de video no es válido. Pegá un enlace de YouTube o Vimeo (por ejemplo: https://www.youtube.com/watch?v=...).'
-  if (v.whatsapp.trim() && parsearTelefonos(v.whatsapp).length === 0)
-    e.whatsapp = 'Escribí al menos un número de teléfono (por ejemplo: 11 2345-6789).'
-  if (v.etapas.some((x) => x.detalle.trim() && !x.titulo.trim()))
-    e.etapas = 'Cada etapa necesita un título.'
-  if (v.certificaciones.some((x) => (x.anio.trim() || x.entidad.trim()) && !x.nombre.trim()))
-    e.certificaciones = 'Cada certificación necesita un nombre.'
 
   if (modo === 'publicar') {
-    if (vacio(v.descripcion_breve)) e.descripcion_breve = 'Escribí una descripción breve.'
-    if (vacio(v.descripcion_completa)) e.descripcion_completa = 'Escribí la descripción completa.'
+    if (vacio(v.descripcion_completa)) e.descripcion_completa = 'Escribí la descripción del curso.'
     if (!v.categoria_id) e.categoria_id = 'Elegí una categoría.'
     if (vacio(v.duracion)) e.duracion = 'Indicá la duración (por ejemplo: 3 meses).'
     if (!v.modalidad) e.modalidad = 'Elegí la modalidad.'
-    if (!v.es_demo) {
-      if (v.modalidad && v.modalidad !== 'virtual' && vacio(v.ubicacion))
-        e.ubicacion = 'Indicá dónde se dicta el curso.'
-      if (vacio(v.whatsapp) && vacio(v.enlace_inscripcion))
-        e.whatsapp = 'Agregá un WhatsApp o un enlace de inscripción para que puedan contactarte.'
-    }
   }
   return e
 }
@@ -99,16 +81,11 @@ export function cursoAPayload(v) {
     return t === '' ? null : t
   }
   const monto = (x) => (x === '' || x === null || x === undefined ? null : Number(x))
-  const etapas = v.etapas
-    .map((x) => ({ titulo: x.titulo.trim(), detalle: x.detalle.trim() }))
-    .filter((x) => x.titulo)
-  const certificaciones = v.certificaciones
-    .map((x) => ({ nombre: x.nombre.trim(), anio: x.anio.trim(), entidad: x.entidad.trim() }))
-    .filter((x) => x.nombre)
+  const desc = txt(v.descripcion_completa)
 
   return {
     nombre: v.nombre.trim(),
-    descripcion_breve: txt(v.descripcion_breve),
+    descripcion_breve: desc ? desc.slice(0, 300) : null,
     descripcion_completa: txt(v.descripcion_completa),
     categoria_id: v.categoria_id ? Number(v.categoria_id) : null,
     imagen_url: txt(v.imagen_url),
@@ -122,24 +99,24 @@ export function cursoAPayload(v) {
     video_url: null,
     duracion: txt(v.duracion),
     modalidad: v.modalidad || null,
-    inicio: txt(v.inicio),
-    horarios: txt(v.horarios),
-    ubicacion: v.modalidad === 'virtual' ? null : txt(v.ubicacion),
-    etapas,
-    certificaciones,
-    ofrece_certificado: certificaciones.length > 0,
-    salidas_descripcion: txt(v.salidas_descripcion),
-    salidas_ambitos: lineas(v.salidas_ambitos),
-    salidas_actividades: lineas(v.salidas_actividades),
     moneda: 'ARS',
     es_gratuito: !!v.es_gratuito,
     matricula: v.es_gratuito ? null : monto(v.matricula),
     cuota_mensual: v.es_gratuito ? null : monto(v.cuota_mensual),
-    medios_pago: v.es_gratuito ? null : txt(v.medios_pago),
-    info_adicional: txt(v.info_adicional),
-    whatsapp: txt(v.whatsapp),
-    enlace_inscripcion: txt(v.enlace_inscripcion),
-    es_demo: !!v.es_demo,
+    inicio: null,
+    horarios: null,
+    ubicacion: null,
+    etapas: [],
+    certificaciones: [],
+    ofrece_certificado: false,
+    salidas_descripcion: txt(v.salidas_descripcion),
+    salidas_ambitos: [],
+    salidas_actividades: [],
+    medios_pago: null,
+    info_adicional: null,
+    whatsapp: null,
+    enlace_inscripcion: null,
+    es_demo: false,
     estado: v.estado,
   }
 }
@@ -151,6 +128,7 @@ export function cursoAFormulario(c) {
     const val = c[k]
     out[k] = val === null || val === undefined ? CURSO_VACIO[k] : val
   }
+  if (!out.descripcion_completa && c.descripcion_breve) out.descripcion_completa = c.descripcion_breve
   out.categoria_id = c.categoria_id ? String(c.categoria_id) : ''
   out.matricula = c.matricula === null || c.matricula === undefined ? '' : String(Number(c.matricula))
   out.cuota_mensual = c.cuota_mensual === null || c.cuota_mensual === undefined ? '' : String(Number(c.cuota_mensual))
