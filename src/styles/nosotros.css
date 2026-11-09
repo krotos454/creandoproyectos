@@ -156,3 +156,47 @@
 
 /* Nombre completo del curso en las tarjetas (sin cortar) */
 .catalogo .fcard__title { display: block; -webkit-line-clamp: unset; overflow: visible; min-height: 0; }
+
+
+/* ---- Sobre nosotros: historia, símbolos, proyectos, bienvenida ---- */
+.nos__historia, .nos__simbolos, .nos__proyectos, .nos__bienvenida { padding: 28px 0 40px; }
+.nos__historia h2, .nos__simbolos h2, .nos__proyectos h2 { text-align: center; font-size: clamp(1.5rem, 3vw, 2.1rem); color: var(--ink-violet); margin: 0 0 8px; }
+.nos__historia .container { max-width: 860px; }
+.nos__historia h2 { margin-bottom: 32px; }
+
+.linea { list-style: none; margin: 0; padding: 0 0 0 0; position: relative; }
+.linea::before { content: ''; position: absolute; left: 49px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: linear-gradient(#b3a7d1, #ddd2e9); }
+.linea__hito { position: relative; display: grid; grid-template-columns: 100px 1fr; gap: 22px; align-items: start; margin-bottom: 22px; }
+.linea__anio { position: relative; z-index: 1; justify-self: start; width: 100px; padding: 8px 0; text-align: center; border-radius: 999px; background: var(--violet-700); color: #fff; font-weight: 800; font-size: 1.05rem; letter-spacing: .03em; box-shadow: 0 0 0 5px #fffdfb, 0 8px 18px rgba(63,45,99,.18); }
+.linea__hito:last-child .linea__anio { background: linear-gradient(135deg, #6b5a91, #3f2d63); }
+.linea__hito p { margin: 0; padding: 16px 20px; background: #fff; border: 1px solid #e8e1f2; border-top: 4px solid var(--violet-700); border-radius: 14px; box-shadow: 0 10px 24px rgba(63,45,99,.08); color: #4a3f63; font-size: 1.02rem; line-height: 1.65; }
+
+.simbolos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; max-width: 900px; margin: 0 auto; }
+.simbolo { padding: 24px 24px 26px; background: #fff; border: 1px solid #e8e1f2; border-top: 5px solid var(--violet-700); border-radius: 16px; box-shadow: 0 10px 24px rgba(63,45,99,.08); }
+.simbolo h3 { margin: 0 0 8px; font-size: 1.15rem; color: var(--ink-violet); }
+.simbolo p { margin: 0; color: #4a3f63; line-height: 1.65; }
+
+.nos__proyectos .container { text-align: center; }
+.nos__proyectos h2 { margin-bottom: 18px; }
+.nos__sedes-titulo { margin: 26px 0 12px; font-size: 1.1rem; color: var(--violet-800); }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 999px; background: #ece6f6; color: var(--violet-800); font-weight: 600; }
+.chip--fuerte { background: var(--violet-700); color: #fff; padding: 11px 22px; box-shadow: 0 8px 18px rgba(63,45,99,.18); }
+
+.bienvenida { max-width: 820px; margin: 0 auto; padding: 34px 32px 36px; text-align: center; color: #fff; border-radius: 22px; background: linear-gradient(135deg, #6b5a91, #3f2d63); box-shadow: 0 18px 38px rgba(63,45,99,.28); }
+.bienvenida svg { opacity: .9; }
+.bienvenida h2 { margin: 6px 0 10px; font-size: clamp(1.7rem, 3.6vw, 2.4rem); color: #fff; }
+.bienvenida p { margin: 0 auto; max-width: 62ch; font-size: 1.08rem; line-height: 1.7; color: #f0ecf7; }
+
+@media (max-width: 640px) {
+  .linea::before { left: 33px; }
+  .linea__hito { grid-template-columns: 1fr; gap: 10px; padding-left: 0; margin-bottom: 20px; }
+  .linea__anio { width: 68px; padding: 6px 0; font-size: .95rem; }
+  .linea__hito p { margin-left: 22px; padding: 14px 16px; font-size: .97rem; }
+  .simbolos { grid-template-columns: 1fr; }
+  .bienvenida { padding: 28px 20px 30px; border-radius: 18px; }
+}
+
+/* Pie: con 5 enlaces el menú debe poder pasar a otra línea en celulares */
+.footer__nav { flex-wrap: wrap; row-gap: 8px; }
+@media (max-width: 640px) { .footer__nav { gap: 8px 18px; justify-content: center; } }
