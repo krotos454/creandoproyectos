@@ -5,7 +5,7 @@ export const site = {
   // Correo institucional (ej.: 'info@tudominio.com'). Lo usa el botón «Enviar un correo» de Contacto.
   email: '',
   // WhatsApp institucional: es el que usan todos los botones de consulta del sitio.
-  whatsapp: '11 3605-2246',
+  whatsapp: '11 3040-1087',
   // Redes sociales: se muestran en el pie SOLO si ponés la dirección real (ej.: 'https://instagram.com/tu_usuario').
   social: { facebook: '', instagram: '' },
 }
