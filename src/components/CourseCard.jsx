@@ -1,3 +1,4 @@
+import { rutaCurso } from '../lib/consultoria.js'
 import { Link } from 'react-router-dom'
 import { Clock, ImageIcon, Monitor, Wallet } from 'lucide-react'
 import { MODALIDADES, resumenAranceles, tieneAranceles } from '../lib/format.js'
@@ -8,7 +9,7 @@ export default function CourseCard({ curso }) {
   const c = curso
   const miniatura = c.imagen_miniatura_url || c.imagen_url
   const precio = tieneAranceles(c) ? resumenAranceles(c).principal : ''
-  const href = `/cursos/${c.id}`
+  const href = rutaCurso(c)
   return (
     <article className="fcard">
       <Link to={href} className="fcard__media" aria-label={`Ver el curso ${c.nombre}`}>

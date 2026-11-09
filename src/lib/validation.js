@@ -59,6 +59,8 @@ export function validarCurso(v, modo) {
   else if (v.nombre.length > 150) e.nombre = 'El nombre es demasiado largo (máximo 150).'
 
   if (v.descripcion_completa.length > 8000) e.descripcion_completa = 'Máximo 8000 caracteres.'
+  if (String(v.ubicacion ?? '').length > 200) e.ubicacion = 'Máximo 200 caracteres.'
+  if (String(v.horarios ?? '').length > 500) e.horarios = 'Máximo 500 caracteres.'
   if (!esMonto(v.matricula)) e.matricula = 'Ingresá un importe válido (0 o más).'
   if (!esMonto(v.cuota_mensual)) e.cuota_mensual = 'Ingresá un importe válido (0 o más).'
   if ((v.videos ?? []).some((x) => String(x).trim() && !parsearVideo(x)))
@@ -103,9 +105,9 @@ export function cursoAPayload(v) {
     es_gratuito: !!v.es_gratuito,
     matricula: v.es_gratuito ? null : monto(v.matricula),
     cuota_mensual: v.es_gratuito ? null : monto(v.cuota_mensual),
-    inicio: null,
-    horarios: null,
-    ubicacion: null,
+    inicio: txt(v.inicio),
+    horarios: txt(v.horarios),
+    ubicacion: txt(v.ubicacion),
     etapas: [],
     certificaciones: [],
     ofrece_certificado: false,

@@ -14,6 +14,7 @@ export const site = {
 export const menu = [
   { label: 'Inicio', to: '/' },
   { label: 'Cursos', to: '/cursos' },
+  { label: 'Consultoría', to: '/consultoria' },
   { label: 'Contacto', to: '/contacto' },
   { label: 'Sobre nosotros', to: '/nosotros' },
 ]

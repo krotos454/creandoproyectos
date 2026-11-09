@@ -1,10 +1,11 @@
+import { esConsultoria, rutaCurso } from '../lib/consultoria.js'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock, Monitor, ImageIcon } from 'lucide-react'
 import { MODALIDADES, resumenAranceles, tieneAranceles } from '../lib/format.js'
 
 // Últimos cursos publicados (datos reales de la base): tarjetas horizontales con el flyer a la izquierda.
 export default function CursosDestacados({ cursos = [] }) {
-  const lista = cursos.slice(0, 4)
+  const lista = cursos.filter((c) => !esConsultoria(c)).slice(0, 4)
   if (lista.length === 0) return null
   return (
     <section className="container destacados" aria-labelledby="destacados-title">
@@ -18,7 +19,7 @@ export default function CursosDestacados({ cursos = [] }) {
           const precio = tieneAranceles(c) ? resumenAranceles(c) : null
           return (
             <article key={c.id} className="hcard">
-              <Link to={`/cursos/${c.id}`} className="hcard__media" aria-label={`Ver detalles de ${c.nombre}`}>
+              <Link to={rutaCurso(c)} className="hcard__media" aria-label={`Ver detalles de ${c.nombre}`}>
                 {img ? <img src={img} alt={`Flyer del curso ${c.nombre}`} loading="lazy" decoding="async" width="300" height="430" />
                      : <span className="hcard__vacio"><ImageIcon size={26} /></span>}
               </Link>
@@ -30,7 +31,7 @@ export default function CursosDestacados({ cursos = [] }) {
                   {c.duracion && <li><Clock size={16} /> {c.duracion}</li>}
                 </ul>
                 {precio && <strong className="hcard__price">{precio.principal}</strong>}
-                <Link to={`/cursos/${c.id}`} className="hcard__btn">Ver detalles <ArrowRight size={16} /></Link>
+                <Link to={rutaCurso(c)} className="hcard__btn">Ver detalles <ArrowRight size={16} /></Link>
               </div>
             </article>
           )

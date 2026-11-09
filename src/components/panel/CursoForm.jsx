@@ -115,12 +115,12 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
         <div className="videobox">
           <div className="videobox__head">
             <span className="videobox__icon"><Clapperboard size={22} /></span>
-            <strong>Videos <em>(opcional, enlaces de YouTube o Vimeo)</em></strong>
+            <strong>Videos (opcional)</strong>
           </div>
           {(v.videos ?? []).map((url, k) => (
             <div className="videobox__item" key={k}>
               <div className="videobox__row">
-                <input type="url" inputMode="url" aria-label={`Enlace del video ${k + 1}`} placeholder="https://www.youtube.com/watch?v=..." value={url} maxLength={300}
+                <input type="url" inputMode="url" aria-label={`Enlace del video ${k + 1}`} value={url} maxLength={300}
                   onChange={(e) => setV((p) => ({ ...p, videos: p.videos.map((x, j) => (j === k ? e.target.value : x)) }))} />
                 <button type="button" className="btn btn--outline btn--sm" onClick={() => setV((p) => ({ ...p, videos: p.videos.filter((_, j) => j !== k) }))}>Quitar</button>
               </div>
@@ -145,11 +145,20 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
               <option value="hibrida">Híbrida (presencial y virtual)</option>
             </select>
           </Field>
-          <Field label="Duración" required error={errores.duracion} hint="Ejemplo: 3 meses, 3 años.">
+          <Field label="Duración" required error={errores.duracion}>
             <input type="text" value={v.duracion} onChange={set('duracion')} maxLength={100} aria-invalid={!!errores.duracion} />
           </Field>
         </div>
-        <Field label="Salida laboral (opcional)" hint="Una o dos líneas. Si lo dejás vacío no se muestra.">
+        <Field label="Fecha de inicio">
+          <input type="text" value={v.inicio} onChange={set('inicio')} maxLength={100} />
+        </Field>
+        <Field label="Descripción de la modalidad (opcional)" error={errores.ubicacion}>
+          <input type="text" value={v.ubicacion} onChange={set('ubicacion')} maxLength={200} aria-invalid={!!errores.ubicacion} />
+        </Field>
+        <Field label="Días y horarios (opcional)" error={errores.horarios}>
+          <textarea rows="3" value={v.horarios} onChange={set('horarios')} maxLength={500} aria-invalid={!!errores.horarios} />
+        </Field>
+        <Field label="Salida laboral (opcional)">
           <textarea rows="3" value={v.salidas_descripcion} onChange={set('salidas_descripcion')} maxLength={600} />
         </Field>
       </fieldset>
@@ -162,7 +171,7 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
         </label>
         {!v.es_gratuito && (
           <div className="form-grid">
-            <Field label="Matrícula de inscripción ($)" error={errores.matricula}>
+            <Field label="Inscripción a matrícula ($)" error={errores.matricula}>
               <input type="number" min="0" step="0.01" inputMode="decimal" value={v.matricula} onChange={set('matricula')} aria-invalid={!!errores.matricula} />
             </Field>
             <Field label="Cuota mensual ($)" error={errores.cuota_mensual}>

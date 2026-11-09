@@ -77,6 +77,7 @@ Para **publicar** un curso se exigen: descripción breve y completa, categoría,
 
 `supabase/migrations/` tiene el historial. Las versiones vigentes son la `003_modo_profesor.sql` (reemplaza a las anteriores), la `004_flyers_verticales.sql` (miniatura/original y límite de 8 MB) y la `005_sin_instituciones.sql` (quita las instituciones y agrega programa, certificaciones, salidas laborales, matrícula, cuota, medios de pago y WhatsApp). Las tres ya están aplicadas en tu proyecto. Si algún día creás otro proyecto de Supabase, ejecutá `001`, `002`, `003`, `004` y `005` en ese orden en el SQL Editor y cargá al profesor con el `insert` de arriba.
 
+
 ## Instituciones eliminadas y cursos de muestra
 - La plataforma ya no tiene instituciones: ni páginas, ni menú, ni tablas. La migración `005` solo borra la tabla si está vacía (si algún día tuviera datos, la deja y avisa). Los cursos y sus imágenes se conservan.
 - El menú público es: **Inicio, Cursos, Contacto**.

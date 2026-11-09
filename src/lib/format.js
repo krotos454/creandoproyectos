@@ -32,7 +32,7 @@ export const tieneAranceles = (c) =>
 export function resumenAranceles(c) {
   if (c.es_gratuito) return { principal: 'Gratuito', secundario: '' }
   const cuota = (c.cuota_mensual ?? null) !== null ? `${formatMonto(c.cuota_mensual, c.moneda)} por mes` : ''
-  const matricula = (c.matricula ?? null) !== null ? `Matrícula ${formatMonto(c.matricula, c.moneda)}` : ''
+  const matricula = (c.matricula ?? null) !== null ? `Inscripción a matrícula ${formatMonto(c.matricula, c.moneda)}` : ''
   if (!cuota && !matricula) return { principal: 'Consultar aranceles', secundario: '' }
   return { principal: cuota || matricula, secundario: cuota ? matricula : '' }
 }

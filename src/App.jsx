@@ -49,6 +49,8 @@ export default function App() {
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/cursos" element={<Cursos />} />
           <Route path="/cursos/:id" element={<CursoDetalle />} />
+          <Route path="/consultoria" element={<Cursos modo="consultoria" />} />
+          <Route path="/consultoria/:id" element={<CursoDetalle />} />
           <Route path="/contacto" element={<Contacto />} />
           {/* Acceso oculto: no hay ningún enlace hacia esta dirección */}
           <Route path="/profesor" element={<ProfesorLogin />} />
