@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BookOpen, MapPin, Heart } from 'lucide-react'
+import { ArrowRight, BookOpen, MapPin, Heart, Handshake } from 'lucide-react'
 import PersonaFoto from '../components/PersonaFoto.jsx'
 import { nosotros, historia, simbolos, proyectos, bienvenida } from '../config/nosotros.js'
 import { useAsync } from '../lib/useAsync.js'
@@ -65,14 +65,22 @@ export default function Nosotros() {
           </ol>
 
           <div className="nos__imagen" aria-labelledby="simbolos-title">
-            <h3 id="simbolos-title">{simbolos.titulo} <small>{simbolos.intro}</small></h3>
+            <h3 id="simbolos-title">{simbolos.titulo}</h3>
+            <p className="nos__imagen-intro">{simbolos.intro}</p>
             <div className="simbolos">
-              {simbolos.items.map((i) => (
-                <article key={i.titulo} className="simbolo">
-                  <h4>{i.titulo}</h4>
-                  <p>{i.texto}</p>
-                </article>
-              ))}
+              <article className="simbolo simbolo--izq">
+                <span className="simbolo__icono" aria-hidden="true">Ψ</span>
+                <h4>{simbolos.items[0].titulo}</h4>
+                <p>{simbolos.items[0].texto}</p>
+              </article>
+              <div className="simbolos__logo">
+                <img src="/logo-288.png" srcSet="/logo-288.png 1x, /logo.png 2x" alt="Logo de CreandoProyectos: manos entrelazadas formando un círculo con el símbolo de la psicología" width="170" height="170" loading="lazy" decoding="async" />
+              </div>
+              <article className="simbolo simbolo--der">
+                <span className="simbolo__icono" aria-hidden="true"><Handshake size={20} /></span>
+                <h4>{simbolos.items[1].titulo}</h4>
+                <p>{simbolos.items[1].texto}</p>
+              </article>
             </div>
           </div>
 
