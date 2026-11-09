@@ -63,43 +63,40 @@ export default function Nosotros() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
 
-      <section className="nos__simbolos" aria-labelledby="simbolos-title">
-        <div className="container">
-          <h2 id="simbolos-title">{simbolos.titulo}</h2>
-          <p className="nos__sub">{simbolos.intro}</p>
-          <div className="simbolos">
-            {simbolos.items.map((i) => (
-              <article key={i.titulo} className="simbolo">
-                <h3>{i.titulo}</h3>
-                <p>{i.texto}</p>
-              </article>
-            ))}
+          <div className="nos__imagen" aria-labelledby="simbolos-title">
+            <h3 id="simbolos-title">{simbolos.titulo} <small>{simbolos.intro}</small></h3>
+            <div className="simbolos">
+              {simbolos.items.map((i) => (
+                <article key={i.titulo} className="simbolo">
+                  <h4>{i.titulo}</h4>
+                  <p>{i.texto}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      <section className="nos__proyectos" aria-labelledby="proyectos-title">
-        <div className="container">
-          <h2 id="proyectos-title">{proyectos.titulo}</h2>
-          <ul className="chips">
-            {proyectos.items.map((x) => <li key={x} className="chip chip--fuerte"><BookOpen size={16} /> {x}</li>)}
-          </ul>
-          <h3 className="nos__sedes-titulo">{proyectos.sedesTitulo}</h3>
-          <ul className="chips">
-            {proyectos.sedes.map((x) => <li key={x} className="chip"><MapPin size={15} /> {x}</li>)}
-          </ul>
-        </div>
-      </section>
+          <div className="nos__proyectos">
+            <div className="nos__fila">
+              <h3>{proyectos.titulo}</h3>
+              <ul className="chips">
+                {proyectos.items.map((x) => <li key={x} className="chip chip--fuerte"><BookOpen size={14} /> {x}</li>)}
+              </ul>
+            </div>
+            <div className="nos__fila">
+              <h3>{proyectos.sedesTitulo}</h3>
+              <ul className="chips">
+                {proyectos.sedes.map((x) => <li key={x} className="chip"><MapPin size={13} /> {x}</li>)}
+              </ul>
+            </div>
+          </div>
 
-      <section className="nos__bienvenida" aria-labelledby="bienvenida-title">
-        <div className="container">
           <div className="bienvenida">
-            <Heart size={26} aria-hidden="true" />
-            <h2 id="bienvenida-title">{bienvenida.titulo}</h2>
-            <p>{bienvenida.texto}</p>
+            <Heart size={20} aria-hidden="true" />
+            <div>
+              <h3>{bienvenida.titulo}</h3>
+              <p>{bienvenida.texto}</p>
+            </div>
           </div>
         </div>
       </section>

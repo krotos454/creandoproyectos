@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowDown, ArrowUp, Eye, EyeOff, ImagePlus, Loader2, Pencil, PlusCircle, Trash2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, Eye, EyeOff, ImagePlus, Loader2, Move, Pencil, PlusCircle, Trash2 } from 'lucide-react'
 import Spinner from '../../components/Spinner.jsx'
 import Modal from '../../components/Modal.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog.jsx'
 import Field from '../../components/panel/Field.jsx'
 import PersonaFoto from '../../components/PersonaFoto.jsx'
+import FotoAjuste from '../../components/panel/FotoAjuste.jsx'
 import { useToast } from '../../context/ToastContext.jsx'
 import { useAsync } from '../../lib/useAsync.js'
 import { mensajeError } from '../../lib/format.js'
 import {
   TIPOS_PERSONA, listarPersonas, crearPersona, actualizarPersona, eliminarPersona,
-  intercambiarOrden, subirFoto, borrarFoto, prepararRetrato,
+  intercambiarOrden, subirFoto, borrarFoto,
 } from '../../lib/personas.js'
 
 const VACIA = { tipo: 'creador', nombre: '', cargo: '', bio: '', visible: true }
@@ -132,6 +133,7 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
   const [foto, setFoto] = useState(null) // { blob, ext, vistaPrevia } pendiente
   const [quitar, setQuitar] = useState(false)
   const [procesando, setProcesando] = useState(false)
+  const [ajustando, setAjustando] = useState(null) // archivo que se está encuadrando
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
   const input = useRef(null)
@@ -140,12 +142,25 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
 
   const set = (k) => (e) => setV((x) => ({ ...x, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
 
-  const elegir = async (e) => {
+  const elegir = (e) => {
     const f = e.target.files?.[0]
     e.target.value = ''
     if (!f) return
+    setError('')
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(f.type)) { setError('Solo se permiten imágenes JPG, PNG o WEBP.'); return }
+    if (f.size > 10 * 1024 * 1024) { setError('La imagen pesa más de 10 MB. Elegí una más liviana.'); return }
+    setAjustando(f)
+  }
+
+  // Vuelve a encuadrar la foto que ya está cargada.
+  const reajustar = async () => {
     setProcesando(true); setError('')
-    try { setFoto(await prepararRetrato(f)); setQuitar(false) } catch (err) { setError(err.message) } finally { setProcesando(false) }
+    try {
+      const resp = await fetch(urlActual)
+      const blob = await resp.blob()
+      setAjustando(new File([blob], 'foto', { type: blob.type || 'image/webp' }))
+    } catch { setError('No pudimos abrir la foto para ajustarla. Elegí la foto de nuevo con «Reemplazar foto».') }
+    finally { setProcesando(false) }
   }
 
   const urlActual = foto?.vistaPrevia || (!quitar ? persona.foto_url : null)
@@ -183,6 +198,9 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
     <Modal title={nueva ? 'Agregar persona' : 'Editar perfil'} onClose={guardando ? () => {} : onClose}>
       <form className="form equipo__form" onSubmit={guardar}>
         <div className="equipo__foto">
+          {ajustando ? (
+            <FotoAjuste archivo={ajustando} onCancelar={() => setAjustando(null)} onListo={(r) => { setFoto(r); setQuitar(false); setAjustando(null) }} />
+          ) : <>
           <PersonaFoto url={urlActual} nombre={v.nombre || 'la persona'} />
           <div className="upload__actions">
             <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={elegir} />
@@ -190,12 +208,18 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
               {procesando ? <Loader2 size={16} className="spin" /> : <ImagePlus size={16} />} {urlActual ? 'Reemplazar foto' : 'Subir foto'}
             </button>
             {urlActual && !procesando && (
+              <button type="button" className="btn btn--outline btn--sm" onClick={reajustar} disabled={guardando}>
+                <Move size={16} /> Ajustar foto
+              </button>
+            )}
+            {urlActual && !procesando && (
               <button type="button" className="btn btn--outline btn--sm btn--danger-outline" onClick={() => { setFoto(null); setQuitar(true) }}>
                 <Trash2 size={16} /> Quitar foto
               </button>
             )}
           </div>
-          <small className="hint">JPG, PNG o WEBP. Se muestra en círculo: conviene un retrato con la cara centrada. La foto la tiene que proporcionar la institución.</small>
+          <small className="hint">JPG, PNG o WEBP. Se muestra en círculo: después de elegirla podés moverla y acercarla para encuadrar la cara.</small>
+          </>}
         </div>
 
         <Field label="Sección">
