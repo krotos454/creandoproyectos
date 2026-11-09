@@ -214,3 +214,25 @@
 .footer__nav { flex-wrap: wrap; row-gap: 8px; }
 @media (max-width: 640px) { .footer__nav { gap: 8px 18px; justify-content: center; } }
 .fajuste__zoom input[type=range] { border: 0; padding: 0; background: none; box-shadow: none; height: 24px; }
+
+/* Encabezado en celulares angostos (320–400 px): logo, sello y botón del menú caben en una línea */
+@media (max-width: 400px) {
+  .header__inner { gap: 4px; }
+  .logo { gap: 7px; }
+  .logo__mark { width: 40px; height: 40px; }
+  .logo__text strong { font-size: 1.08rem; }
+  .logo__text small { font-size: .56rem; letter-spacing: .05em; }
+  .sello10 svg { width: 50px; height: 53px; }
+  .sello10--bar { margin-right: 0; }
+  .header__toggle { padding: 6px 4px; }
+}
+@media (max-width: 340px) {
+  .logo__mark { width: 34px; height: 34px; }
+  .logo__text strong { font-size: .95rem; }
+  .logo__text small { display: none; }
+  .sello10 svg { width: 44px; height: 46px; }
+}
+@media (max-width: 360px) {
+  .cvias { grid-template-columns: minmax(0, 1fr); }
+  .cvia { padding-inline: 16px; min-width: 0; }
+}
