@@ -228,7 +228,7 @@ export async function listarNovedadesPublicas() {
   return ok(
     await supabase
       .from('novedades_inicio')
-      .select('id, orden, etiqueta, titulo, descripcion, enlace, texto_boton, activo, mostrar_popup, imagen_url, updated_at')
+      .select('id, orden, etiqueta, titulo, descripcion, enlace, texto_boton, activo, mostrar_popup, imagen_url, formato_imagen, updated_at')
       .eq('activo', true)
       .order('orden')
       .order('created_at', { ascending: false })
