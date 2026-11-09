@@ -6,7 +6,7 @@ export const novedades = [
     etiqueta: 'Novedad',
     titulo: 'Plataforma de formación exclusivamente asincrónica',
     descripcion: 'Conocé los nuevos cursos y consultá todos los detalles por WhatsApp.',
-    enlace: 'https://wa.me/5491136052246?text=Hola%2C%20quiero%20consultar%20sobre%20la%20novedad.',
+    enlace: 'https://api.whatsapp.com/send/?phone=5491127016293&text=Hola%2C+quiero+consultar+por+los+nuevos+cursos+de+la+plataforma+de+formaci%C3%B3n+asincr%C3%B3nica.&type=phone_number&app_absent=0',
     texto_boton: 'Consultar por WhatsApp',
     tipo_boton: 'whatsapp',
     telefono_whatsapp: '1127016293',
