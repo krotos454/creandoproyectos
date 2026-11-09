@@ -36,6 +36,9 @@ export const SERVICIOS_CONSULTORIA = [
   },
 ]
 
+// Número de consulta de todos los cursos.
+export const WHATSAPP_CURSOS = 'https://wa.me/5491130401087'
+
 export const WHATSAPP_TURNOS = [
   { numero: '11 3464-9614', url: 'https://wa.me/5491134649614' },
   { numero: '11 3040-1087', url: 'https://wa.me/5491130401087' },

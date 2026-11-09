@@ -1,9 +1,7 @@
-import { Link } from 'react-router-dom'
 import { Briefcase, CalendarDays, Clock, MessageCircle, Monitor, Wallet } from 'lucide-react'
-import { site } from '../config/site.js'
 import MediaCarousel from './MediaCarousel.jsx'
-import { MODALIDADES, formatMonto, parsearTelefonos } from '../lib/format.js'
-import { WHATSAPP_TURNOS } from '../lib/serviciosConsultoria.js'
+import { MODALIDADES, formatMonto } from '../lib/format.js'
+import { WHATSAPP_CURSOS, WHATSAPP_TURNOS } from '../lib/serviciosConsultoria.js'
 
 const lleno = (x) => !!String(x ?? '').trim()
 
@@ -15,17 +13,14 @@ export default function CourseView({ curso, categoria }) {
   const c = curso
   const hayMatricula = c.matricula !== null && c.matricula !== undefined && c.matricula !== ''
   const hayCuota = c.cuota_mensual !== null && c.cuota_mensual !== undefined && c.cuota_mensual !== ''
-  const telefonos = parsearTelefonos(c.whatsapp)
 
   const hayModalidad = c.modalidad || lleno(c.ubicacion)
   const hayPrecio = c.es_gratuito || hayMatricula || hayCuota
-  const wa = parsearTelefonos(site.whatsapp).find((t) => t.whatsapp)?.whatsapp
-    || telefonos.find((t) => t.whatsapp)?.whatsapp
   const consult = categoria === 'Consultoría'
   const mensaje = consult
-    ? `Hola, quiero consultar por la consultoría ${c.nombre || ''} de CreandoProyectos. ¿Me pueden dar más información?`
-    : `Hola, me quiero anotar en el curso ${c.nombre || ''} de CreandoProyectos. ¿Me pueden dar más información?`
-  const hrefWa = wa ? `${wa}?text=${encodeURIComponent(mensaje)}` : ''
+    ? `Hola, buenas tardes. Quería consultar por la consultoría ${c.nombre || ''}. ¿Me podrían brindar más información?\nMuchas gracias.`
+    : `Hola, buenas tardes. Quería consultar por el curso de ${c.nombre || ''}. ¿Me podrían brindar más información?\nMuchas gracias.`
+  const hrefWa = `${WHATSAPP_CURSOS}?text=${encodeURIComponent(mensaje)}`
 
   return (
     <article className="cview">
@@ -95,14 +90,10 @@ export default function CourseView({ curso, categoria }) {
               )
             })}
           </div>
-        ) : hrefWa ? (
+        ) : (
           <a className="btn btn--primary cview__cta" href={hrefWa} target="_blank" rel="noopener noreferrer">
             <MessageCircle size={18} /> Consultar por WhatsApp
           </a>
-        ) : (
-          <Link className="btn btn--primary cview__cta" to={`/contacto?curso=${encodeURIComponent(c.nombre || '')}`}>
-            <MessageCircle size={18} /> Consultar por este curso
-          </Link>
         )}
       </div>
     </article>
