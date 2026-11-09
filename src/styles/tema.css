@@ -76,8 +76,14 @@
 .quienes__text h2 { margin: 0; font-size: clamp(1.8rem, 3.2vw, 2.4rem); color: var(--ink-violet); }
 .quienes__text h2::before { content: ''; display: block; width: 28px; height: 3px; border-radius: 3px; background: var(--violet-700); margin-bottom: 10px; }
 .quienes__text p { margin: 0; color: #4a3f63; }
-.quienes__img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; display: block; }
-@media (max-width: 820px) { .quienes { grid-template-columns: 1fr; width: calc(100% - 32px); } .quienes__text { padding: 26px 22px; } .quienes__img { min-height: 0; aspect-ratio: 2 / 1; } }
+.quienes__text p strong { color: var(--ink-violet); }
+.quienes__text p { line-height: 1.6; }
+.quienes__logo { display: grid; place-items: center; padding: 28px; min-height: 260px; background:
+    radial-gradient(260px 260px at 50% 50%, rgba(255,255,255,.75), transparent 72%),
+    linear-gradient(135deg, #cfc3e3 0%, #b3a7d1 100%); }
+.quienes__aro { display: grid; place-items: center; width: 230px; height: 230px; border-radius: 50%; background: #fff; border: 5px solid var(--violet-700); box-shadow: 0 0 0 10px rgba(255,255,255,.55), 0 20px 40px rgba(63,45,99,.28); }
+.quienes__aro img { width: 182px; height: 182px; object-fit: contain; display: block; }
+@media (max-width: 820px) { .quienes { grid-template-columns: 1fr; width: calc(100% - 32px); } .quienes__text { padding: 26px 22px; } .quienes__logo { min-height: 0; padding: 22px; } .quienes__aro { width: 180px; height: 180px; } .quienes__aro img { width: 142px; height: 142px; } }
 
 /* ---------- Nuestros cursos (inicio) ---------- */
 .destacados { margin-top: 48px; padding: 28px; border: 1px solid var(--lav-3); border-radius: 24px; background: var(--lav-1); }
