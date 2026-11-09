@@ -11,6 +11,7 @@ import Cursos from './pages/Cursos.jsx'
 
 const ProfesorLayout = lazy(() => import('./components/panel/ProfesorLayout.jsx'))
 const ProfesorEquipo = lazy(() => import('./pages/profesor/ProfesorEquipo.jsx'))
+const ProfesorNovedades = lazy(() => import('./pages/profesor/ProfesorNovedades.jsx'))
 const ProfesorLogin = lazy(() => import('./pages/profesor/ProfesorLogin.jsx'))
 const ProfesorCursos = lazy(() => import('./pages/profesor/ProfesorCursos.jsx'))
 const ProfesorCursoForm = lazy(() => import('./pages/profesor/ProfesorCursoForm.jsx'))
@@ -61,6 +62,7 @@ export default function App() {
           <Route path="/profesor/panel" element={<ProfesorLayout />}>
             <Route index element={<ProfesorCursos />} />
             <Route path="equipo" element={<ProfesorEquipo />} />
+            <Route path="novedades" element={<ProfesorNovedades />} />
             <Route path="cursos/nuevo" element={<ProfesorCursoForm />} />
             <Route path="cursos/:id" element={<ProfesorCursoForm />} />
           </Route>

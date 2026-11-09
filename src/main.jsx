@@ -10,6 +10,7 @@ import './styles/pages.css'
 import './styles/panel.css'
 import './styles/catalogo.css'
 import './styles/tema.css'
+import './styles/novedades.css'
 import './styles/nosotros.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(

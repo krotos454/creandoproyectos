@@ -1,0 +1,109 @@
+.novedades { position: relative; z-index: 1; max-width: var(--max); padding-top: 30px; }
+.novedades__encabezado { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.novedades__encabezado > span { margin: 0 8px 10px 0; color: var(--muted); font-size: .9rem; }
+.novedades__pestana { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px 8px; padding: 7px 14px; border: 1px solid #d9cdea; border-radius: 999px; color: var(--violet-800); background: #f5f1fa; font-size: .88rem; font-weight: 750; letter-spacing: .01em; }
+.novedades__viewport { overflow: hidden; border-radius: 20px; }
+.novedades__viewport .novedad-card { animation: novedad-slide-in .35s ease-out; }
+.novedades__controles { display: flex; align-items: center; justify-content: center; gap: 17px; margin: 14px auto 0; }
+.novedades__flecha { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #d9cdea; border-radius: 50%; color: var(--violet-800); background: #fff; box-shadow: 0 4px 12px rgba(63,45,99,.08); cursor: pointer; transition: background .18s, transform .18s; }
+.novedades__flecha:hover { background: #f4effa; transform: scale(1.05); }
+.novedades__puntos { display: flex; align-items: center; gap: 7px; max-width: min(48vw, 440px); overflow-x: auto; padding: 5px 2px; scrollbar-width: thin; }
+.novedades__puntos button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; background: #cfc6dc; cursor: pointer; transition: width .2s, background .2s; }
+.novedades__puntos button.is-active { width: 23px; background: var(--violet-700); }
+.novedad-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, .9fr); align-items: stretch; min-height: 290px; overflow: hidden; border: 1px solid #d9cdea; border-radius: 20px; background: #fff; box-shadow: 0 12px 30px rgba(63,45,99,.11); }
+.novedad-card__contenido { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(24px, 4vw, 42px); }
+.novedad__etiqueta { display: inline-flex; align-items: center; gap: 5px; width: fit-content; padding: 5px 12px; border: 1px solid #dacdec; border-radius: 999px; color: var(--violet-800); background: #f4effa; font-size: .76rem; font-weight: 750; letter-spacing: .025em; }
+.novedad-card__sobrelinea { margin: 17px 0 6px; color: var(--violet-700); font-size: .75rem; font-weight: 800; letter-spacing: .12em; }
+.novedad-card h3 { max-width: 25ch; margin: 0 0 10px; color: var(--ink-violet); font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.12; }
+.novedad-card__descripcion { max-width: 40ch; margin: 0; color: #5a5268; }
+.novedad-cta { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: fit-content; min-height: 48px; margin-top: 20px; padding: 11px 18px; border-radius: 999px; color: #fff; background: #6946ad; font-weight: 750; box-shadow: 0 7px 17px rgba(91,54,155,.22); transition: transform .18s, background .18s, box-shadow .18s; }
+.novedad-cta:hover { color: #fff; background: #563691; box-shadow: 0 10px 22px rgba(91,54,155,.28); transform: translateY(-1px); text-decoration: none; }
+.novedad-cta--grande { min-height: 50px; padding-inline: 21px; }
+
+.novedad-card__arte { display: grid; min-height: 290px; place-items: center; background: linear-gradient(140deg, #e9e1f4 0%, #d9cdea 100%); }
+.novedad__imagen { display: block; width: 100%; height: 100%; min-height: inherit; object-fit: cover; }
+.novedad-card--flyer { grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr); }
+.novedad-card__arte--flyer { padding: 12px; background: radial-gradient(ellipse at center, #fff 0%, #f2ecfa 64%, #e6dcf3 100%); }
+.novedad-card__arte--flyer .novedad__imagen { width: auto; height: 100%; min-height: 0; max-width: 100%; max-height: 100%; object-fit: contain; }
+.asincronica-visual { position: relative; display: grid; width: 100%; height: 100%; min-height: inherit; overflow: hidden; place-items: center; background: radial-gradient(ellipse at 48% 72%, rgba(255,255,255,.83), transparent 60%), linear-gradient(140deg, #f4effa 0%, #d8cdea 100%); }
+.asincronica-visual__halo { position: absolute; top: 50%; left: 50%; width: min(75%, 330px); aspect-ratio: 1; border: 1px solid rgba(107,90,145,.13); border-radius: 50%; background: rgba(255,255,255,.2); box-shadow: 0 0 0 22px rgba(255,255,255,.14), 0 0 0 46px rgba(107,90,145,.045); transform: translate(-50%, -50%); }
+.asincronica-visual__ilustracion { position: relative; z-index: 1; display: block; width: min(100%, 440px); height: auto; max-height: 100%; }
+.asincronica-visual__badge { position: absolute; z-index: 2; top: 19px; left: 20px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid rgba(255,255,255,.8); border-radius: 999px; color: var(--violet-800); background: rgba(255,255,255,.8); box-shadow: 0 5px 16px rgba(63,45,99,.08); font-size: .71rem; font-weight: 800; letter-spacing: .08em; }
+.asincronica-visual__caption { position: absolute; z-index: 2; right: 17px; bottom: 15px; display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border: 1px solid rgba(255,255,255,.85); border-radius: 999px; color: var(--ink-violet); background: rgba(255,255,255,.83); box-shadow: 0 4px 14px rgba(63,45,99,.08); font-size: .72rem; font-weight: 700; }
+
+.home .quick { position: relative; z-index: 2; margin-top: 34px; }
+
+.novedad-overlay { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; background: rgba(35,27,49,.66); backdrop-filter: blur(6px); animation: novedad-fade .2s ease-out; }
+.novedad-aviso { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr); width: min(860px, calc(100vw - 36px)); max-height: calc(100vh - 36px); overflow: hidden; border: 1px solid rgba(255,255,255,.78); border-radius: 22px; background: #fff; box-shadow: 0 28px 80px rgba(25,17,40,.4); animation: novedad-pop .25s ease-out; }
+.novedad-aviso__arte { min-height: 340px; }
+.novedad-aviso__arte .novedad__imagen { min-height: 340px; }
+.novedad-aviso__arte--flyer { display: grid; place-items: center; padding: 10px; background: radial-gradient(ellipse at center, #fff 0%, #f2ecfa 70%, #e6dcf3 100%); }
+.novedad-aviso__arte--flyer .novedad__imagen { width: auto; height: 100%; min-height: 0; max-width: 100%; max-height: 100%; object-fit: contain; }
+.novedad-aviso__contenido { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 40px clamp(25px, 4vw, 42px); }
+.novedad-aviso__cerrar { position: absolute; z-index: 3; top: 12px; right: 12px; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #e3dced; border-radius: 50%; color: var(--ink-violet); background: rgba(255,255,255,.94); box-shadow: 0 4px 13px rgba(63,45,99,.12); cursor: pointer; transition: background .15s, transform .15s; }
+.novedad-aviso__cerrar:hover { background: #f5f1fa; transform: scale(1.04); }
+.novedad-aviso__sobrelinea { margin: 19px 0 7px; color: var(--violet-700); font-size: .73rem; font-weight: 800; letter-spacing: .12em; }
+.novedad-aviso h2 { margin: 0; color: var(--ink-violet); font-size: clamp(1.65rem, 3vw, 2.15rem); line-height: 1.1; }
+.novedad-aviso__descripcion { margin: 11px 0 0; color: #5a5268; }
+.novedad-aviso .novedad-cta { margin-top: 20px; }
+
+@keyframes novedad-slide-in { from { opacity: .4; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Carrusel único: portada y novedades comparten un marco fijo y centrado. */
+.home__carousel { width: min(1520px, calc(100% - 40px)); margin: 16px auto 0; padding: clamp(18px, 2.2vw, 30px) clamp(20px, 3.2vw, 48px) 18px; border-radius: 30px; background: #f7f3fb; box-shadow: 0 14px 38px rgba(63,45,99,.08); }
+.home__carousel-view { min-height: 470px; overflow: hidden; border-radius: 26px; background: transparent; animation: novedad-slide-in .35s ease-out; }
+.home__carousel-view > .hero { min-height: 470px; height: 100%; border-radius: 26px; }
+.home__carousel-view > .hero.hero--logo .hero__content { padding-block: 40px 72px; }
+.home__carousel-view > .hero .hero__logo { width: min(320px, 100%); }
+.home__carousel-view > .novedades { display: block; width: 100%; max-width: none; min-height: 470px; margin: 0; padding: 0; }
+.home__carousel-view .novedades__lista { width: 100%; }
+.home__carousel-view .novedad-card { width: 100%; max-width: 1360px; height: 470px; margin: 0 auto; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); }
+.home__carousel-view .novedad-card--flyer { grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr); }
+.home__carousel-view .novedad-card__contenido { padding: clamp(28px, 3vw, 48px); }
+.novedad-card__marca { display: inline-flex; align-items: center; gap: 10px; width: fit-content; margin-bottom: 12px; padding: 10px 17px; border-radius: 999px; color: #6042a0; background: #eee2fa; box-shadow: 0 5px 15px rgba(91,54,155,.12); font-size: 1rem; font-weight: 800; }
+.novedad-card__sobrelinea { margin-top: 12px; }
+.home__carousel-view .novedad-card h3 { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: clamp(1.9rem, 3vw, 2.65rem); }
+.home__carousel-view .novedad-card__descripcion { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; font-size: clamp(1rem, 1.35vw, 1.2rem); }
+.home__carousel-view .novedad-card__arte { min-height: 470px; }
+.home__carousel-view .asincronica-visual__ilustracion { width: min(100%, 500px); }
+.home__carousel-controls { display: flex; align-items: center; justify-content: center; gap: 17px; margin: 18px auto 0; }
+.home__carousel-controls .novedades__flecha { width: 52px; height: 52px; border: 2px solid #7951ca; color: #6946ad; box-shadow: none; }
+.home__carousel-controls .novedades__puntos { max-width: min(52vw, 460px); }
+@media (max-width: 760px) {
+  .home__carousel { width: calc(100% - 24px); margin-top: 12px; padding: 14px 12px 16px; border-radius: 22px; }
+  .home__carousel-view, .home__carousel-view > .hero, .home__carousel-view > .novedades { min-height: 0; }
+  .home__carousel-view > .hero { border-radius: 18px; }
+  .home__carousel-view > .novedades { padding: 0; }
+  .home__carousel-view .novedad-card { height: auto; min-height: 0; grid-template-columns: minmax(0, 1fr); }
+  .home__carousel-view .novedad-card__arte { grid-row: 1; min-height: 230px; }
+  .home__carousel-view .novedad-card--flyer .novedad-card__arte--flyer { height: min(115vw, 460px); min-height: 0; }
+  .home__carousel-view .novedad-card__arte--flyer .novedad__imagen { width: auto; height: 100%; max-width: 100%; max-height: 100%; }
+  .home__carousel-view .novedad-card__contenido { padding: 25px 22px 28px; }
+  .home__carousel-view .novedad-card h3 { font-size: clamp(1.55rem, 7vw, 2rem); }
+  .home__carousel-controls { gap: 11px; margin-top: 13px; }
+  .home__carousel-controls .novedades__flecha { width: 42px; height: 42px; }
+}
+@keyframes novedad-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes novedad-pop { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 680px) {
+  .novedades { padding-top: 22px; }
+  .novedades__encabezado { align-items: flex-start; }
+  .novedades__encabezado > span { padding-top: 7px; font-size: .8rem; }
+  .novedad-card { grid-template-columns: minmax(0, 1fr); }
+  .novedad-card__contenido { padding: 24px 22px 26px; }
+  .novedad-card__arte { grid-row: 1; min-height: 210px; }
+  .asincronica-visual__ilustracion { width: min(85%, 360px); }
+  .asincronica-visual__badge { top: 12px; left: 12px; }
+  .novedad-aviso { grid-template-columns: minmax(0, 1fr); width: min(490px, calc(100vw - 28px)); overflow-y: auto; }
+  .novedad-aviso__arte { grid-row: 1; min-height: 190px; max-height: 220px; }
+  .novedad-aviso--flyer .novedad-aviso__arte--flyer { height: 250px; min-height: 0; max-height: 250px; }
+  .novedad-aviso__arte--flyer .novedad__imagen { min-height: 0; max-height: 100%; }
+  .novedad-aviso__contenido { padding: 24px 24px 27px; }
+  .novedad-aviso__sobrelinea { margin-top: 14px; }
+  .novedad-aviso h2 { max-width: 25ch; font-size: clamp(1.5rem, 7vw, 1.85rem); }
+  .novedad-aviso__descripcion { margin-top: 8px; }
+  .novedad-aviso .novedad-cta { margin-top: 15px; }
+  .novedad-aviso .asincronica-visual__badge { left: 14px; top: 12px; }
+  .novedad-aviso .asincronica-visual__caption { right: 11px; bottom: 9px; }
+}
+@media (prefers-reduced-motion: reduce) { .novedad-overlay, .novedad-aviso, .novedad-cta, .novedades__viewport .novedad-card { animation: none; transition: none; } }

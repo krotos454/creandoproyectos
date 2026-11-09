@@ -113,8 +113,8 @@
 .catalogo .fcard__body .btn { padding: 8px 12px; font-size: .88rem; }
 
 /* ---------- Fondo limpio con formas suaves: panel y ficha del curso ---------- */
-.panel__main { position: relative; overflow: hidden; background: #fffdfb; }
-.panel__main > * { position: relative; z-index: 1; }
+.panel__main { position: relative; overflow: visible; background: #fffdfb; }
+.panel__main > *:not(.modal) { position: relative; z-index: 1; }
 .panel__main::before, .panel__main::after { width: min(32vw, 340px); height: min(24vw, 250px); opacity: .55; }
 .nos--ficha > .section { padding-top: 28px; }
 .videobox__item { display: grid; gap: 10px; margin: 10px 0; }

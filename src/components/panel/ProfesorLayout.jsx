@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { BookOpen, PlusCircle, LogOut, Menu, X, Globe, Users } from 'lucide-react'
+import { BookOpen, PlusCircle, LogOut, Menu, X, Globe, Users, Megaphone } from 'lucide-react'
 import Logo from '../Logo.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 
@@ -8,6 +8,7 @@ const items = [
   { to: '/profesor/panel', label: 'Mis cursos', icon: BookOpen, end: true },
   { to: '/profesor/panel/cursos/nuevo', label: 'Crear curso', icon: PlusCircle },
   { to: '/profesor/panel/equipo', label: 'Sobre nosotros', icon: Users },
+  { to: '/profesor/panel/novedades', label: 'Novedades', icon: Megaphone },
 ]
 
 export default function ProfesorLayout() {

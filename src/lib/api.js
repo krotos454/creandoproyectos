@@ -220,3 +220,43 @@ export async function eliminarCurso(id) {
     return { imagenesPendientes: true }
   }
 }
+
+// ---------- Novedades ----------
+const CAMPOS_NOVEDAD = 'id, orden, etiqueta, titulo, descripcion, enlace, texto_boton, activo, mostrar_popup, imagen_url, imagen_path, formato_imagen, tipo_boton, telefono_whatsapp, curso_id, created_at, updated_at'
+
+export async function listarNovedadesPublicas() {
+  return ok(
+    await supabase
+      .from('novedades_inicio')
+      .select('id, orden, etiqueta, titulo, descripcion, enlace, texto_boton, activo, mostrar_popup, imagen_url, updated_at')
+      .eq('activo', true)
+      .order('orden')
+      .order('created_at', { ascending: false })
+  )
+}
+
+export async function listarTodasLasNovedades() {
+  return ok(
+    await supabase
+      .from('novedades_inicio')
+      .select(CAMPOS_NOVEDAD)
+      .order('orden')
+      .order('created_at', { ascending: false })
+  )
+}
+
+export async function crearNovedad(payload) {
+  return ok(await supabase.from('novedades_inicio').insert(payload).select('*').single())
+}
+
+export async function actualizarNovedad(id, payload) {
+  return ok(await supabase.from('novedades_inicio').update(payload).eq('id', id).select('*').single())
+}
+
+export async function cambiarEstadoNovedad(id, activo) {
+  return ok(await supabase.from('novedades_inicio').update({ activo }).eq('id', id).select('id').single())
+}
+
+export async function eliminarNovedad(id) {
+  return ok(await supabase.from('novedades_inicio').delete().eq('id', id).select('*').single())
+}
