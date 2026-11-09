@@ -11,7 +11,7 @@ import { borrarFoto, prepararRetrato, subirFoto } from '../../lib/personas.js'
 import { rutaCurso } from '../../lib/consultoria.js'
 import { mensajeError } from '../../lib/format.js'
 
-const PHONE_DEFAULT = '1136052246'
+const PHONE_DEFAULT = '1130401087'
 const MENSAJE_WHATSAPP = 'Hola, quiero consultar sobre la novedad.'
 const NUEVA = { etiqueta: 'Novedad', titulo: '', descripcion: '', formato_imagen: 'flyer', tipo_boton: 'whatsapp', telefono_whatsapp: PHONE_DEFAULT, curso_id: '', imagen_url: null, imagen_path: null, activo: true, mostrar_popup: false }
 
