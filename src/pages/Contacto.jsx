@@ -6,6 +6,12 @@ import { useAsync } from '../lib/useAsync.js'
 import { isSupabaseConfigured } from '../lib/supabase.js'
 import { listarCursosPublicos } from '../lib/api.js'
 
+// CAMBIO: detecta si el visitante está en un celular o tablet.
+const esMovil =
+  typeof navigator !== 'undefined' &&
+  (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+
 // Contacto: solo dos vías (WhatsApp y correo). Sin formularios ni datos inventados.
 export default function Contacto() {
   const [params] = useSearchParams()
@@ -23,7 +29,12 @@ export default function Contacto() {
 
   const email = (site.email || '').trim()
   const asunto = curso ? `Consulta: ${curso}` : 'Consulta desde el sitio'
-  const hrefMail = email ? `mailto:${email}?subject=${encodeURIComponent(asunto)}` : ''
+  // CAMBIO: en celular abre la app de correo (mailto); en computadora abre Gmail en el navegador.
+  const hrefMail = !email
+    ? ''
+    : esMovil
+      ? `mailto:${email}?subject=${encodeURIComponent(asunto)}`
+      : `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(asunto)}`
 
   return (
     <div className="contacto">
@@ -55,7 +66,8 @@ export default function Contacto() {
           <h2>Contactanos por correo</h2>
           <p>Mandanos tu consulta y te responderemos a la brevedad.</p>
           {hrefMail ? (
-            <a className="cvia__btn" href={hrefMail}>
+            // CAMBIO: en computadora se abre en una pestaña nueva.
+            <a className="cvia__btn" href={hrefMail} {...(esMovil ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
               <Mail size={22} /> Enviar un correo <ArrowRight size={18} />
             </a>
           ) : (
