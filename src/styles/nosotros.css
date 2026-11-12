@@ -248,3 +248,16 @@
   .hero__actions .btn { padding: 11px 18px; font-size: .95rem; }
   .quick__card { padding: 20px 20px 22px; }
 }
+
+/* Celulares: novedades del carrusel más compactas (no afecta compu) */
+@media (max-width: 760px) {
+  .home__carousel-view .novedad-card__arte:not(.novedad-card__arte--flyer) { min-height: 0; height: 190px; }
+  .home__carousel-view .asincronica-visual__ilustracion { width: auto; height: 130px; max-width: 80%; }
+  .home__carousel-view .asincronica-visual__halo { width: 150px; }
+  .home__carousel-view .asincronica-visual__caption { right: 10px; bottom: 8px; font-size: .66rem; padding: 5px 9px; }
+  .home__carousel-view .novedad-card__contenido { padding: 18px 18px 20px; }
+  .novedad-card__marca { padding: 6px 12px; margin-bottom: 8px; font-size: .85rem; }
+  .home__carousel-view .novedad-card h3 { display: block; -webkit-line-clamp: unset; font-size: 1.5rem; line-height: 1.15; }
+  .home__carousel-view .novedad-card__descripcion { font-size: .98rem; line-height: 1.45; -webkit-line-clamp: 4; }
+  .home__carousel-view .novedad-card .novedad-cta { margin-top: 14px; padding: 11px 18px; font-size: .95rem; }
+}
