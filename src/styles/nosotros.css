@@ -237,12 +237,14 @@
   .cvia { padding-inline: 16px; min-width: 0; }
 }
 
-/* Celulares: portada y tarjetas más compactas (no afecta compu ni tablets grandes) */
+/* Celulares: portada sin logo grande (el logo ya está en el encabezado) y más compacta. No afecta compu ni tablets grandes. */
 @media (max-width: 760px) {
-  .home__carousel-view > .hero .hero__logo { width: 132px; }
-  .home__carousel-view > .hero.hero--logo .hero__content { padding-block: 22px 52px; }
-  .hero--logo .hero__content h1 { font-size: 2rem; }
-  .hero--logo .hero__content p { font-size: 1.02rem; }
-  .hero__actions { gap: 10px; }
+  .home__carousel-view > .hero .hero__logo { display: none; }
+  .hero--logo .hero__content h1 { font-size: 1.95rem; }
+  .hero__swoosh { width: 150px; margin: 8px 0 10px; }
+  .hero--logo .hero__content p { font-size: 1rem; line-height: 1.5; }
+  .home__carousel-view > .hero.hero--logo .hero__content { padding-block: 26px 52px; }
+  .hero__actions { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .hero__actions .btn { padding: 11px 18px; font-size: .95rem; }
   .quick__card { padding: 20px 20px 22px; }
 }
