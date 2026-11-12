@@ -236,3 +236,13 @@
   .cvias { grid-template-columns: minmax(0, 1fr); }
   .cvia { padding-inline: 16px; min-width: 0; }
 }
+
+/* Celulares: portada y tarjetas más compactas (no afecta compu ni tablets grandes) */
+@media (max-width: 760px) {
+  .home__carousel-view > .hero .hero__logo { width: 132px; }
+  .home__carousel-view > .hero.hero--logo .hero__content { padding-block: 22px 52px; }
+  .hero--logo .hero__content h1 { font-size: 2rem; }
+  .hero--logo .hero__content p { font-size: 1.02rem; }
+  .hero__actions { gap: 10px; }
+  .quick__card { padding: 20px 20px 22px; }
+}
