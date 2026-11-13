@@ -3,8 +3,6 @@ import { ArrowRight, GraduationCap, MessageCircle } from 'lucide-react'
 import { site } from '../config/site.js'
 import { parsearTelefonos } from '../lib/format.js'
 
-// Franja de contacto por WhatsApp. Usa el WhatsApp institucional (config/site.js) y, si no está,
-// el primer WhatsApp válido cargado en los cursos publicados. Nunca inventa un número.
 export function numeroWhatsApp(cursos = []) {
   const candidatos = [site.whatsapp, ...cursos.map((c) => c.whatsapp)]
   for (const t of candidatos) {

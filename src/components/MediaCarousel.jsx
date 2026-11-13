@@ -4,13 +4,11 @@ import FlyerImage from './FlyerImage.jsx'
 import VideoDemo from './VideoDemo.jsx'
 import { listaVideos } from '../lib/video.js'
 
-// Galería de la ficha del curso: primero el flyer y, con flechas, se pasa a los videos.
-// Si el curso no tiene video, se muestra solo el flyer (sin flechas).
 export default function MediaCarousel({ curso: c }) {
   const videos = listaVideos(c)
   const hayVideo = videos.length > 0
   const [i, setI] = useState(0)
-  const [visto, setVisto] = useState({}) // el video recién se prepara cuando se llega a esa diapositiva
+  const [visto, setVisto] = useState({})
   const inicio = useRef(null)
 
   const flyer = (

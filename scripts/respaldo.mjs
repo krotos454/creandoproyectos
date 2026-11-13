@@ -1,12 +1,9 @@
-// Respaldo de creandoproyectos: baja todos los cursos (incluidos borradores) y todas sus imágenes (desde Cloudflare R2).
-// Uso:  npm run respaldo
-// Pide el usuario y la clave del profesor (los mismos del panel). No guarda la clave en ningún lado.
 import { createClient } from '@supabase/supabase-js'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import readline from 'node:readline'
 
-const DOMINIO = 'creandoproyectos.app' // mismo dominio interno que usa el login del panel
+const DOMINIO = 'creandoproyectos.app'
 
 async function leerEnv() {
   const env = { ...process.env }
@@ -16,7 +13,7 @@ async function leerEnv() {
       const m = linea.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/)
       if (m && !(m[1] in env)) env[m[1]] = m[2].replace(/^["']|["']$/g, '')
     }
-  } catch { /* si no hay .env, se usan las variables del sistema */ }
+  } catch {}
   return env
 }
 
@@ -34,7 +31,7 @@ async function listarArchivos(bucket, prefijo) {
   if (error) throw error
   for (const item of data ?? []) {
     const ruta = prefijo ? `${prefijo}/${item.name}` : item.name
-    if (item.id === null) salida.push(...(await listarArchivos(bucket, ruta))) // carpeta
+    if (item.id === null) salida.push(...(await listarArchivos(bucket, ruta)))
     else salida.push(ruta)
   }
   return salida
@@ -72,8 +69,7 @@ await writeFile(join(carpeta, 'cursos.json'), JSON.stringify(cursos.data, null, 
 await writeFile(join(carpeta, 'categorias.json'), JSON.stringify(categorias.data, null, 2))
 console.log(`Cursos guardados: ${cursos.data.length}`)
 
-// Las imágenes viven en Cloudflare R2: se bajan desde su dirección pública guardada en cada curso.
-const rutas = new Map() // clave en R2 -> URL pública
+const rutas = new Map()
 for (const c of cursos.data) {
   for (const [k, u] of [[c.imagen_key, c.imagen_url], [c.imagen_miniatura_key, c.imagen_miniatura_url], [c.imagen_original_key, c.imagen_original_url]]) {
     if (k && u) rutas.set(k, u)

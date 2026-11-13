@@ -1,6 +1,5 @@
 import { useId } from 'react'
 
-// Sello "10 años": corona de laureles, cinco estrellas y el número grande, en violeta.
 const estrella = (cx, cy, r) => {
   const p = []
   for (let i = 0; i < 10; i++) {
@@ -15,7 +14,7 @@ function hojas() {
   const out = []
   const C = 100, R = 68
   for (let k = 0; k < 12; k++) {
-    const t = 98 + k * 10 // grados desde abajo, subiendo por la izquierda
+    const t = 98 + k * 10
     for (const lado of [1, -1]) {
       for (const cara of [1, -1]) {
         const ang = lado === 1 ? t : 180 - t

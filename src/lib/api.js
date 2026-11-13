@@ -133,21 +133,16 @@ function normalizarCurso(curso) {
   }
 }
 
-// Toda función lanza el error de Supabase si algo falla.
 const ok = ({ data, error }) => {
   if (error) throw error
   return data
 }
 
-// Datos que necesita el catálogo (tarjetas).
 const CURSO_TARJETA = `
   id, nombre, descripcion_breve, imagen_url, imagen_miniatura_url, duracion, modalidad,
   inicio, es_gratuito, matricula, cuota_mensual, moneda, ofrece_certificado, es_demo,
   categoria_id, updated_at, categorias(nombre)
 `
-
-// ---------- Público ----------
-// La base de datos (RLS) solo entrega los cursos con estado "publicado".
 
 export async function listarCategorias() {
   return ok(await supabase.from('categorias').select('id, nombre').order('orden').order('nombre'))
@@ -175,8 +170,6 @@ export async function obtenerCursoPublico(id) {
   return normalizarCurso(curso)
 }
 
-// ---------- Panel del profesor ----------
-
 export async function listarTodosLosCursos() {
   return ok(
     await supabase
@@ -202,9 +195,6 @@ export async function cambiarEstadoCurso(id, estado) {
   return ok(await supabase.from('cursos').update({ estado }).eq('id', id).select('id').single())
 }
 
-// Elimina el curso y, después, sus imágenes de R2 (el Worker solo borra las que
-// ningún otro curso usa). Devuelve { imagenesPendientes: true } si el curso se borró
-// pero no se pudieron limpiar las imágenes.
 export async function eliminarCurso(id) {
   const curso = ok(
     await supabase.from('cursos').select('imagen_key, imagen_miniatura_key, imagen_original_key').eq('id', id).maybeSingle()
@@ -221,7 +211,6 @@ export async function eliminarCurso(id) {
   }
 }
 
-// ---------- Novedades ----------
 const CAMPOS_NOVEDAD = 'id, orden, etiqueta, titulo, descripcion, enlace, texto_boton, activo, mostrar_popup, imagen_url, imagen_path, formato_imagen, tipo_boton, telefono_whatsapp, curso_id, created_at, updated_at'
 
 export async function listarNovedadesPublicas() {

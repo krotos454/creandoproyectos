@@ -9,10 +9,8 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
 
-  // Cierra el menú móvil al navegar.
   useEffect(() => setOpen(false), [pathname])
 
-  // Cierra con la tecla Escape.
   useEffect(() => {
     const onKey = (e) => e.key === 'Escape' && setOpen(false)
     document.addEventListener('keydown', onKey)

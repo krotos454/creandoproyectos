@@ -1,11 +1,3 @@
--- =====================================================================
--- creandoproyectos · Modo "profesor único"
--- Reemplaza el sistema de instituciones/solicitudes/roles por algo simple:
--- UNA sola cuenta (la del profesor) administra cursos e instituciones.
--- Nadie más puede escribir nada, aunque se registre.
--- =====================================================================
-
--- 1. Quitar lo anterior (la base estaba vacía) ---------------------------------
 drop policy if exists imagenes_select_own on storage.objects;
 drop policy if exists imagenes_insert_own on storage.objects;
 drop policy if exists imagenes_delete_own on storage.objects;
@@ -37,9 +29,6 @@ drop function if exists public.is_member(uuid);
 drop function if exists public.is_admin();
 drop function if exists public.cursos_guard();
 
--- 2. Quién es el profesor ------------------------------------------------------
--- Tabla de una sola fila. NO se puede escribir desde el navegador: se carga
--- desde el SQL Editor de Supabase (ver CONFIGURACION.md).
 create table public.profesor_acceso (
   user_id    uuid primary key references auth.users(id) on delete cascade,
   created_at timestamptz not null default now()
@@ -57,7 +46,6 @@ $$;
 revoke execute on function public.es_profesor() from public, anon;
 grant execute on function public.es_profesor() to authenticated;
 
--- 3. Instituciones y cursos ----------------------------------------------------
 create table public.instituciones (
   id          uuid primary key default gen_random_uuid(),
   nombre      text not null check (char_length(btrim(nombre)) between 2 and 120),
@@ -119,7 +107,6 @@ create trigger instituciones_updated before update on public.instituciones
 create trigger cursos_updated before update on public.cursos
   for each row execute function public.set_updated_at();
 
--- 4. Permisos y seguridad por filas (RLS) --------------------------------------
 revoke all on public.instituciones, public.cursos, public.categorias from anon, authenticated;
 grant select on public.instituciones, public.cursos, public.categorias to anon;
 grant select, insert, update, delete on public.instituciones, public.cursos, public.categorias to authenticated;
@@ -128,7 +115,6 @@ alter table public.instituciones enable row level security;
 alter table public.cursos        enable row level security;
 alter table public.categorias    enable row level security;
 
--- Todo el mundo ve lo público
 create policy categorias_publico on public.categorias for select to anon, authenticated using (true);
 create policy instituciones_publico on public.instituciones for select to anon, authenticated
   using (visible);
@@ -138,7 +124,6 @@ create policy cursos_publico on public.cursos for select to anon, authenticated
     and exists (select 1 from public.instituciones i where i.id = institucion_id and i.visible)
   );
 
--- Solo el profesor puede ver todo y escribir
 create policy categorias_profesor on public.categorias for all to authenticated
   using (public.es_profesor()) with check (public.es_profesor());
 create policy instituciones_profesor on public.instituciones for all to authenticated
@@ -146,7 +131,6 @@ create policy instituciones_profesor on public.instituciones for all to authenti
 create policy cursos_profesor on public.cursos for all to authenticated
   using (public.es_profesor()) with check (public.es_profesor());
 
--- 5. Imágenes: solo el profesor sube o borra (lectura pública por URL) ---------
 create policy imagenes_profesor_select on storage.objects for select to authenticated
   using (bucket_id = 'imagenes' and public.es_profesor());
 create policy imagenes_profesor_insert on storage.objects for insert to authenticated

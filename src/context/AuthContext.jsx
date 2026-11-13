@@ -3,8 +3,6 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase.js'
 
 const AuthContext = createContext(null)
 
-// El "usuario" del profesor se convierte en un email interno para Supabase Auth.
-// Si escribe un email completo (con @), se usa tal cual.
 const DOMINIO = 'creandoproyectos.app'
 export const usuarioAEmail = (usuario) => {
   const u = String(usuario).trim().toLowerCase()
@@ -35,7 +33,6 @@ export function AuthProvider({ children }) {
     return () => sub.subscription.unsubscribe()
   }, [])
 
-  // Solo sirve para mostrar u ocultar pantallas. Los permisos reales los decide la base de datos.
   const verificar = useCallback(async (id) => {
     const { data } = await supabase.from('profesor_acceso').select('user_id').eq('user_id', id).maybeSingle()
     setEsProfesor(!!data)

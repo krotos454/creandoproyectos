@@ -1,8 +1,5 @@
 import { supabase } from './supabase.js'
 
-// Los flyers se guardan en Cloudflare R2. El navegador NUNCA tiene credenciales de R2:
-// habla con un Worker que comprueba la sesión de Supabase y el permiso de profesor.
-// Las imágenes se leen directo desde el dominio público del bucket (URL guardada en la base).
 const API = (import.meta.env.VITE_UPLOAD_API_URL || '').replace(/\/+$/, '')
 
 export const subidasConfiguradas = Boolean(API)
@@ -26,13 +23,10 @@ async function llamar(ruta, opciones) {
   return cuerpo
 }
 
-// Claves de R2 que usa un curso (o una respuesta de subida).
 export function clavesDeCurso(c) {
   return [c?.imagen_key, c?.imagen_miniatura_key, c?.imagen_original_key].filter(Boolean)
 }
 
-// Sube las tres versiones del flyer (original, completa, miniatura).
-// Devuelve las URLs públicas y las claves para guardarlas en el curso.
 export async function subirFlyer({ original, completa, miniatura }) {
   const form = new FormData()
   form.append('original', original, original.name || 'original')
@@ -42,7 +36,6 @@ export async function subirFlyer({ original, completa, miniatura }) {
   return llamar('/flyers', { method: 'POST', body: form })
 }
 
-// Pide borrar imágenes. El Worker solo borra las que ningún curso sigue usando.
 export async function borrarImagenes(claves) {
   if (!claves?.length) return { borradas: [], en_uso: [] }
   return llamar('/flyers/borrar', {

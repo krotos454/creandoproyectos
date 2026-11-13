@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Check, Loader2, ZoomIn, ZoomOut } from 'lucide-react'
 
-const V = 240 // tamaño del círculo de ajuste (px en pantalla)
-const SALIDA = 640 // tamaño final de la foto (px)
+const V = 240
+const SALIDA = 640
 
-// Permite mover y acercar la foto dentro del círculo antes de guardarla.
-// Devuelve { blob, ext, vistaPrevia } con la foto ya recortada en cuadrado.
 export default function FotoAjuste({ archivo, onListo, onCancelar }) {
-  const [img, setImg] = useState(null) // ImageBitmap
+  const [img, setImg] = useState(null)
   const [zoom, setZoom] = useState(1)
   const [off, setOff] = useState({ x: 0, y: 0 })
   const [error, setError] = useState('')

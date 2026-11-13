@@ -1,5 +1,3 @@
-// Videos de demostración: se aceptan enlaces de YouTube y Vimeo (el video vive allá, no pesa en el sitio).
-// Devuelve { proveedor, id, embed, miniatura } o null si el enlace no es válido.
 export function parsearVideo(texto) {
   const t = String(texto ?? '').trim()
   if (!t) return null
@@ -46,14 +44,12 @@ function yt(id) {
   }
 }
 
-// Dirección normalizada que se guarda en la base (siempre https).
 export function normalizarVideo(texto) {
   const t = String(texto ?? '').trim()
   if (!t) return null
   return /^https?:\/\//i.test(t) ? t.replace(/^http:\/\//i, 'https://') : `https://${t}`
 }
 
-// Lista de videos válidos de un curso (soporta el campo viejo video_url).
 export function listaVideos(curso) {
   const base = Array.isArray(curso?.videos) ? curso.videos : []
   const todos = base.length ? base : curso?.video_url ? [curso.video_url] : []

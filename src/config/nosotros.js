@@ -1,4 +1,3 @@
-// Textos de la página "Sobre nosotros". Editá solo lo que está entre comillas.
 export const nosotros = {
   etiqueta: 'Quiénes somos',
   titulo: 'Una escuela, muchos proyectos y un mismo propósito.',
@@ -11,7 +10,6 @@ export const nosotros = {
   subtituloDocentes: 'Quienes comparten sus conocimientos y acompañan cada aprendizaje.',
 }
 
-// Historia de la escuela (línea de tiempo). Cada hito: año o etiqueta + texto.
 export const historia = [
   {
     anio: '2013',

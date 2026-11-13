@@ -1,6 +1,5 @@
 import { Briefcase, GraduationCap } from 'lucide-react'
 
-// Banner lavanda de la página de Cursos: título a la izquierda y foto de estudio a la derecha que se funde con el fondo.
 export default function CursosBanner({ consultoria = false }) {
   const Icono = consultoria ? Briefcase : GraduationCap
   return (

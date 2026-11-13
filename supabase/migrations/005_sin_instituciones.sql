@@ -1,18 +1,3 @@
--- =====================================================================
--- creandoproyectos · 005 · Sin instituciones + cursos más completos
---
--- • Los cursos dejan de depender de una institución.
--- • Se agregan: programa por etapas, certificaciones, salidas laborales,
---   matrícula, cuota mensual, medios de pago e información adicional,
---   WhatsApp y marca de "ejemplo demostrativo".
--- • Los cursos y sus imágenes se CONSERVAN. Las columnas viejas que ya no
---   usa el formulario (precio, promocion, requisitos, etc.) no se borran.
--- • La tabla "instituciones" solo se elimina si está VACÍA; si tuviera datos
---   se deja como está y se avisa (nada se pierde sin que lo decidas).
--- Se ejecuta una sola vez desde Supabase → SQL Editor.
--- =====================================================================
-
--- 1. Cursos nuevos campos -------------------------------------------------------
 alter table public.cursos
   add column if not exists inicio              text    check (char_length(inicio) <= 100),
   add column if not exists etapas              jsonb   not null default '[]'::jsonb,
@@ -35,16 +20,12 @@ alter table public.cursos
   add constraint cursos_salidas_ambitos_valido check (coalesce(cardinality(salidas_ambitos), 0) <= 40),
   add constraint cursos_salidas_actividades_valido check (coalesce(cardinality(salidas_actividades), 0) <= 40);
 
--- 2. Quitar la dependencia de instituciones ---------------------------------------
--- La política pública y la regla de "publicado" se rehacen sin institución.
 drop policy if exists cursos_publico on public.cursos;
 alter table public.cursos drop constraint if exists curso_publicado_completo;
 drop index if exists public.cursos_institucion_idx;
 alter table public.cursos drop constraint if exists cursos_institucion_id_fkey;
 alter table public.cursos drop column if exists institucion_id;
 
--- Para publicar un curso: datos básicos + una forma de contacto.
--- (Los ejemplos demostrativos no necesitan teléfono ni lugar.)
 alter table public.cursos add constraint curso_publicado_completo check (
   estado <> 'publicado' or (
     char_length(btrim(coalesce(descripcion_breve, ''))) > 0
@@ -60,7 +41,6 @@ alter table public.cursos add constraint curso_publicado_completo check (
 create policy cursos_publico on public.cursos for select to anon, authenticated
   using (estado = 'publicado');
 
--- 3. Eliminar la tabla de instituciones (solo si está vacía) ------------------------
 do $$
 begin
   if to_regclass('public.instituciones') is not null then

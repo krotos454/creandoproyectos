@@ -1,5 +1,3 @@
-// Agregá las novedades nuevas al principio de esta lista.
-// Cambiar el id también hace que el anuncio emergente vuelva a mostrarse en cada dispositivo.
 export const novedades = [
   {
     id: 'cursos-asincronicos-diseno-2026-11',

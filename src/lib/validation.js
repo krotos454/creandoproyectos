@@ -1,11 +1,10 @@
 import { normalizarVideo, parsearVideo } from './video.js'
 
-
 export const ETAPA_VACIA = { titulo: '', detalle: '' }
 export const CERTIFICACION_VACIA = { nombre: '', anio: '', entidad: '' }
 
 export const CURSO_VACIO = {
-  // A. Información general
+
   nombre: '',
   descripcion_breve: '',
   descripcion_completa: '',
@@ -17,27 +16,27 @@ export const CURSO_VACIO = {
   imagen_miniatura_key: '',
   imagen_original_key: '',
   imagen_nombre: '',
-  videos: [], // opcional: enlaces de YouTube o Vimeo
-  // B. Características
+  videos: [],
+
   duracion: '',
   modalidad: '',
   inicio: '',
   horarios: '',
   ubicacion: '',
-  // C. Programa y certificaciones
+
   etapas: [],
   certificaciones: [],
-  // D. Salidas laborales
+
   salidas_descripcion: '',
-  salidas_ambitos: '', // una por línea
-  salidas_actividades: '', // una por línea
-  // E. Inscripción y aranceles
+  salidas_ambitos: '',
+  salidas_actividades: '',
+
   es_gratuito: false,
   matricula: '',
   cuota_mensual: '',
   medios_pago: '',
   info_adicional: '',
-  // F. Contacto y publicación
+
   whatsapp: '',
   enlace_inscripcion: '',
   es_demo: false,
@@ -49,7 +48,6 @@ const lineas = (t) =>
 
 const esMonto = (x) => x === '' || (!isNaN(Number(x)) && Number(x) >= 0)
 
-// modo 'borrador': solo el nombre es obligatorio. modo 'publicar': lo necesario para mostrarlo.
 export function validarCurso(v, modo) {
   const e = {}
   const vacio = (x) => !String(x ?? '').trim()
@@ -75,8 +73,6 @@ export function validarCurso(v, modo) {
   return e
 }
 
-// Convierte los valores del formulario al formato de la base de datos.
-// Solo se envían los campos que usa el formulario: las columnas viejas no se tocan.
 export function cursoAPayload(v) {
   const txt = (x) => {
     const t = String(x ?? '').trim()
@@ -123,7 +119,6 @@ export function cursoAPayload(v) {
   }
 }
 
-// Convierte una fila de la base de datos a valores de formulario.
 export function cursoAFormulario(c) {
   const out = { ...CURSO_VACIO }
   for (const k of Object.keys(CURSO_VACIO)) {

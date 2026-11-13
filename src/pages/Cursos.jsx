@@ -31,7 +31,7 @@ export default function Cursos({ modo = 'cursos' }) {
     []
   )
   const todos = data ?? []
-  // Los cursos y las consultorías comparten la base de datos: acá se separan por categoría.
+
   const cursos = useMemo(() => {
     const publicados = todos.filter((c) => esConsultoria(c) === consult)
     return consult ? [...SERVICIOS_COMO_CURSOS, ...publicados] : publicados
@@ -42,7 +42,6 @@ export default function Cursos({ modo = 'cursos' }) {
   const [modalidad, setModalidad] = useState('')
   const [orden, setOrden] = useState('recientes')
 
-  // Las opciones salen de los cursos publicados: nunca aparece una categoría o modalidad vacía.
   const categorias = useMemo(() => {
     const m = new Map()
     cursos.forEach((c) => c.categorias?.nombre && m.set(c.categoria_id, c.categorias.nombre))
@@ -62,7 +61,7 @@ export default function Cursos({ modo = 'cursos' }) {
         (!modalidad || c.modalidad === modalidad)
     )
     if (orden === 'az') return [...lista].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'))
-    return lista // la base ya los entrega del más reciente al más antiguo
+    return lista
   }, [cursos, q, categoria, modalidad, orden])
 
   const hayFiltros = q || categoria || modalidad

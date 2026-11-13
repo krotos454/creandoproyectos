@@ -1,11 +1,11 @@
 :root {
-  /* Identidad violeta: se usa en botones, enlaces, íconos y detalles; los fondos son claros. */
-  --violet-900: #302b38;   /* texto principal / fondos oscuros (pie, panel) */
-  --violet-800: #574877;   /* hover de botones */
-  --violet-700: #6b5a91;   /* violeta principal */
-  --violet-600: #8877ad;   /* violeta secundario */
-  --violet-300: #a99bc9;   /* lavanda suave */
-  --violet-50:  #f0ecf7;   /* fondo lavanda muy claro */
+
+  --violet-900: #302b38;
+  --violet-800: #574877;
+  --violet-700: #6b5a91;
+  --violet-600: #8877ad;
+  --violet-300: #a99bc9;
+  --violet-50:  #f0ecf7;
   --ink: #302b38;
   --muted: #777180;
   --line: #e6e1ef;

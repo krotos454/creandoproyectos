@@ -1,10 +1,8 @@
-/* ---------- Encabezado de páginas internas ---------- */
 .page-header { background: var(--violet-50); border-bottom: 1px solid var(--line); padding-block: 48px; }
 .page-header h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 8px; color: var(--violet-800); }
 .page-header h1::after { content: ''; display: block; width: 48px; height: 4px; border-radius: 4px; background: var(--violet-600); margin-top: 12px; }
 .page-header p { color: var(--muted); margin: 0; max-width: 60ch; }
 
-/* ---------- Tarjetas ---------- */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .2s; }
 .card:hover { transform: translateY(-4px); }
@@ -19,7 +17,6 @@
 @media (max-width: 960px) { .cards { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
 
-/* ---------- Filtros de cursos ---------- */
 .filters { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
 .search { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 10px 18px; min-width: min(100%, 300px); background: #fff; color: var(--muted); }
 .search input { border: 0; outline: 0; font: inherit; width: 100%; background: transparent; color: var(--ink); }
@@ -30,7 +27,6 @@
 .chip.is-active { background: var(--violet-700); border-color: var(--violet-700); color: #fff; }
 .empty { text-align: center; color: var(--muted); padding: 40px 0; }
 
-/* ---------- Contacto ---------- */
 .contact { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: start; }
 .form { display: flex; flex-direction: column; gap: 18px; }
 .form label { display: flex; flex-direction: column; gap: 6px; font-weight: 500; font-size: .95rem; }
@@ -45,7 +41,6 @@
 .contact__info a:hover { color: var(--violet-700); text-decoration: underline; }
 @media (max-width: 820px) { .contact { grid-template-columns: 1fr; } }
 
-/* ---------- Avisos ---------- */
 .notice { max-width: 640px; margin: 0 auto; text-align: center; background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius); padding: 40px 28px; }
 .notice__icon { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; background: var(--violet-50); color: var(--violet-700); margin-bottom: 16px; }
 .notice h2 { font-size: 1.4rem; }

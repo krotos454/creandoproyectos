@@ -6,7 +6,6 @@ import { useAsync } from '../lib/useAsync.js'
 import { isSupabaseConfigured } from '../lib/supabase.js'
 import { listarPersonasPublicas } from '../lib/personas.js'
 
-// Mientras todavía no hay perfiles cargados se muestran círculos vacíos («Próximamente»).
 const pendientes = (n) => Array.from({ length: n }, (_, i) => ({ id: `p${i}`, nombre: 'Próximamente', pendiente: true }))
 
 function Grupo({ titulo, subtitulo, personas, id }) {

@@ -1,9 +1,3 @@
--- =====================================================================
--- creandoproyectos · Página "Sobre nosotros": creadores y equipo docente
--- Lectura pública SOLO de perfiles visibles; escritura solo para el profesor (es_profesor()).
--- Las fotos van en el bucket público "personas" de Supabase Storage.
--- YA APLICADA al proyecto de Supabase. Es seguro ejecutarla de nuevo.
--- =====================================================================
 create table if not exists public.personas (
   id          uuid primary key default gen_random_uuid(),
   tipo        text not null check (tipo in ('creador', 'docente')),
@@ -40,7 +34,6 @@ revoke all on public.personas from anon, authenticated;
 grant select on public.personas to anon;
 grant select, insert, update, delete on public.personas to authenticated;
 
--- Bucket público para las fotos (solo imágenes, hasta 2 MB).
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('personas', 'personas', true, 2097152, array['image/webp', 'image/jpeg', 'image/png'])
 on conflict (id) do update

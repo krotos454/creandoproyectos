@@ -5,7 +5,6 @@ import ConfigNotice from './ConfigNotice.jsx'
 import { isSupabaseConfigured } from '../lib/supabase.js'
 import { mensajeError } from '../lib/format.js'
 
-// Muestra carga / error / vacío. Si pasa todo, renderiza children.
 export default function DataState({ loading, error, empty, emptyTitle, emptyText, onRetry, children }) {
   if (!isSupabaseConfigured) return <ConfigNotice />
   if (loading) return <Spinner />

@@ -1,10 +1,8 @@
 {
-  // Publica el sitio (carpeta "dist") en Cloudflare. No contiene secretos.
   "name": "creandoproyectos",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
-    // Hace que /cursos, /contacto, /profesor... funcionen al refrescar o abrir un enlace directo.
     "not_found_handling": "single-page-application"
   }
 }

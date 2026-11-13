@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { Play } from 'lucide-react'
 import { parsearVideo } from '../lib/video.js'
 
-// Reproductor 16:9. En YouTube muestra primero la portada y recién carga el video al tocar «Play»
-// (así la página no se vuelve pesada).
 export default function VideoDemo({ url, titulo = 'Video de demostración' }) {
   const [activo, setActivo] = useState(false)
   const v = parsearVideo(url)

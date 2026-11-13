@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ImageOff, X, ZoomIn, ExternalLink } from 'lucide-react'
 
-// Muestra un flyer vertical COMPLETO (sin recortar ni deformar) y permite ampliarlo con un clic.
 export default function FlyerImage({ src, original, alt, priority = false }) {
   const [abierto, setAbierto] = useState(false)
   const [cargada, setCargada] = useState(false)
@@ -48,7 +47,6 @@ function Visor({ src, original, alt, onClose }) {
     document.body.style.overflow = 'hidden'
     cerrar.current?.focus()
 
-    // En fase de captura para que Escape cierre solo el visor y no también una ventana que esté debajo.
     const onKey = (e) => {
       if (e.key === 'Escape') {
         e.stopImmediatePropagation()

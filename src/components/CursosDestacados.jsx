@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Clock, Monitor, ImageIcon } from 'lucide-react'
 import { MODALIDADES, resumenAranceles, tieneAranceles } from '../lib/format.js'
 
-// Últimos cursos publicados (datos reales de la base): tarjetas horizontales con el flyer a la izquierda.
 export default function CursosDestacados({ cursos = [] }) {
   const lista = cursos.filter((c) => !esConsultoria(c)).slice(0, 4)
   if (lista.length === 0) return null

@@ -10,7 +10,6 @@ export const ESTADOS = {
   despublicado: 'Despublicado',
 }
 
-// Importes en pesos argentinos: "$ 10.000" (sin centavos si son .00).
 export function formatMonto(valor, moneda = 'ARS') {
   if (valor === null || valor === undefined || valor === '') return ''
   try {
@@ -28,7 +27,6 @@ export function formatMonto(valor, moneda = 'ARS') {
 export const tieneAranceles = (c) =>
   !!c.es_gratuito || (c.matricula ?? null) !== null || (c.cuota_mensual ?? null) !== null
 
-// Texto corto para las tarjetas del catálogo.
 export function resumenAranceles(c) {
   if (c.es_gratuito) return { principal: 'Gratuito', secundario: '' }
   const cuota = (c.cuota_mensual ?? null) !== null ? `${formatMonto(c.cuota_mensual, c.moneda)} por mes` : ''
@@ -37,7 +35,6 @@ export function resumenAranceles(c) {
   return { principal: cuota || matricula, secundario: cuota ? matricula : '' }
 }
 
-// Valor para ordenar por cuota (gratuito = 0, sin dato = al final).
 export function cuotaParaOrdenar(c) {
   if (c.es_gratuito) return 0
   if ((c.cuota_mensual ?? null) !== null) return Number(c.cuota_mensual)
@@ -45,8 +42,6 @@ export function cuotaParaOrdenar(c) {
   return Infinity
 }
 
-// "11 3464-9614 / 11 3040-1087" -> [{ texto, tel, whatsapp }]
-// El enlace de WhatsApp solo se arma si el número se puede interpretar sin adivinar.
 export function parsearTelefonos(texto) {
   const encontrados = String(texto ?? '').match(/\+?\d[\d\s().-]{5,}\d/g) ?? []
   return encontrados.map((t) => {
@@ -69,7 +64,7 @@ export function parsearTelefonos(texto) {
 
 export function formatFecha(iso) {
   if (!iso) return ''
-  // Las fechas "date" (yyyy-mm-dd) se muestran sin desfase de zona horaria.
+
   const d = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? new Date(`${iso}T12:00:00`) : new Date(iso)
   return d.toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' })
 }
@@ -81,7 +76,6 @@ export function formatFechaHora(iso) {
   })
 }
 
-// Traduce errores de Supabase/Postgres a mensajes comprensibles.
 export function mensajeError(error) {
   if (!error) return ''
   const msg = error.message || String(error)

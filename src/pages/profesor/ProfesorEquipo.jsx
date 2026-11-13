@@ -19,7 +19,7 @@ const VACIA = { tipo: 'creador', nombre: '', cargo: '', bio: '', visible: true }
 export default function ProfesorEquipo() {
   const toast = useToast()
   const { data, loading, error, reload } = useAsync(listarPersonas, [])
-  const [editando, setEditando] = useState(null) // persona o { ...VACIA } (nueva)
+  const [editando, setEditando] = useState(null)
   const [aBorrar, setABorrar] = useState(null)
   const [ocupado, setOcupado] = useState(null)
   const personas = data ?? []
@@ -130,10 +130,10 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
   const toast = useToast()
   const nueva = !persona.id
   const [v, setV] = useState({ tipo: persona.tipo, nombre: persona.nombre ?? '', cargo: persona.cargo ?? '', bio: persona.bio ?? '', visible: persona.visible })
-  const [foto, setFoto] = useState(null) // { blob, ext, vistaPrevia } pendiente
+  const [foto, setFoto] = useState(null)
   const [quitar, setQuitar] = useState(false)
   const [procesando, setProcesando] = useState(false)
-  const [ajustando, setAjustando] = useState(null) // archivo que se está encuadrando
+  const [ajustando, setAjustando] = useState(null)
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
   const input = useRef(null)
@@ -152,7 +152,6 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
     setAjustando(f)
   }
 
-  // Vuelve a encuadrar la foto que ya está cargada.
   const reajustar = async () => {
     setProcesando(true); setError('')
     try {
@@ -183,7 +182,7 @@ function PersonaForm({ persona, siguienteOrden, onClose, onGuardado }) {
       }
       if (nueva) await crearPersona({ id, ...datos, orden: siguienteOrden(v.tipo) })
       else await actualizarPersona(id, datos)
-      // Foto anterior que ya no se usa
+
       if ((foto || quitar) && persona.foto_path) await borrarFoto(persona.foto_path)
       toast.ok(nueva ? 'Perfil agregado.' : 'Cambios guardados.')
       onGuardado()

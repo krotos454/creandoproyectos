@@ -1,10 +1,6 @@
-// Procesamiento de flyers en el navegador antes de subirlos.
-// - NO se recorta ni se deforma: solo se reduce el tamaño si la imagen es muy grande.
-// - El archivo original se conserva aparte, tal como lo subió la persona.
-
-const MAX_ANCHO_COMPLETA = 1200   // los flyers de 1017 px de ancho se mantienen a tamaño real
-const MAX_ANCHO_MINIATURA = 600   // alcanza para tarjetas nítidas en pantallas de alta densidad
-const CALIDAD_COMPLETA = 0.9      // alta, para que los textos chicos del flyer sigan legibles
+const MAX_ANCHO_COMPLETA = 1200
+const MAX_ANCHO_MINIATURA = 600
+const CALIDAD_COMPLETA = 0.9
 const CALIDAD_MINIATURA = 0.85
 
 export const TIPOS_FLYER = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }
@@ -20,9 +16,9 @@ export function validarFlyer(file) {
 async function decodificar(file) {
   if (typeof createImageBitmap === 'function') {
     try {
-      return await createImageBitmap(file) // respeta la orientación EXIF
+      return await createImageBitmap(file)
     } catch {
-      /* se prueba con <img> */
+
     }
   }
   const url = URL.createObjectURL(file)
@@ -51,7 +47,7 @@ function codificar(fuente, ancho, alto, calidad) {
     ctx.drawImage(fuente, 0, 0, ancho, alto)
     const webp = await aBlob('image/webp')
     if (webp && webp.type === 'image/webp') return { blob: webp, type: 'image/webp', ext: 'webp' }
-    // Navegadores que no generan WebP: se usa JPG con fondo blanco (sin transparencia).
+
     ctx.fillStyle = '#fff'
     ctx.fillRect(0, 0, ancho, alto)
     ctx.drawImage(fuente, 0, 0, ancho, alto)
@@ -62,12 +58,11 @@ function codificar(fuente, ancho, alto, calidad) {
 }
 
 function medidas(anchoOrig, altoOrig, anchoMax) {
-  const ancho = Math.min(anchoOrig, anchoMax) // nunca se agranda
+  const ancho = Math.min(anchoOrig, anchoMax)
   const alto = Math.round((altoOrig * ancho) / anchoOrig)
   return { ancho, alto }
 }
 
-// Devuelve { original, completa, miniatura, ancho, alto, vistaPrevia }
 export async function prepararFlyer(file) {
   const problema = validarFlyer(file)
   if (problema) throw new Error(problema)

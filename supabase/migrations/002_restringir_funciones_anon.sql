@@ -1,5 +1,3 @@
--- Aplicada también en el proyecto "Creando proyectos" (Supabase).
--- Los visitantes (anon) solo necesitan institucion_aprobada() para ver el catálogo público.
 revoke execute on function
   public.is_admin(),
   public.is_member(uuid),

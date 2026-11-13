@@ -1,4 +1,3 @@
--- Un único anuncio del inicio editable desde el acceso de profesores.
 create table if not exists public.novedades (
   id smallint primary key default 1 check (id = 1),
   etiqueta text not null default 'Novedad',

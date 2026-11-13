@@ -45,7 +45,7 @@ export default function Home() {
   }, [novedades])
 
   const cerrarAviso = () => {
-    try { if (aviso) window.localStorage.setItem(CLAVE_AVISO, versionAviso(aviso)) } catch { /* El aviso se puede cerrar aunque el almacenamiento local esté bloqueado. */ }
+    try { if (aviso) window.localStorage.setItem(CLAVE_AVISO, versionAviso(aviso)) } catch {}
     setAviso(null)
   }
 

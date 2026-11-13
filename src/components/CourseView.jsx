@@ -5,10 +5,6 @@ import { WHATSAPP_CURSOS, WHATSAPP_TURNOS } from '../lib/serviciosConsultoria.js
 
 const lleno = (x) => !!String(x ?? '').trim()
 
-// Vista completa de un curso. La usan la página pública y la vista previa del panel.
-// En escritorio: el flyer a la izquierda y la información a la derecha.
-// En celulares: primero el flyer y debajo toda la información.
-// Las secciones sin datos no se muestran. Todo está también en texto: no depende de la imagen.
 export default function CourseView({ curso, categoria }) {
   const c = curso
   const hayMatricula = c.matricula !== null && c.matricula !== undefined && c.matricula !== ''

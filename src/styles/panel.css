@@ -1,8 +1,3 @@
-/* =====================================================================
-   Panel privado (/panel y /admin) + elementos compartidos de formularios
-   Usa las mismas variables de color del sitio público.
-   ===================================================================== */
-
 :root { --danger: #b91c1c; --danger-bg: #fee2e2; --ok: #166534; --ok-bg: #dcfce7; --warn: #92400e; --warn-bg: #fef3c7; }
 
 code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-size: .9em; }
@@ -13,7 +8,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .link-btn { background: none; border: 0; color: var(--violet-700); font: inherit; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; padding: 0; }
 .filter-note { margin-bottom: 20px; }
 
-/* Botones extra */
 .btn--sm { padding: 8px 14px; font-size: .88rem; }
 .btn--danger { background: var(--danger); color: #fff; }
 .btn--danger:hover { background: #7f1d1d; }
@@ -21,7 +15,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .btn--danger-outline:hover { background: var(--danger); color: #fff; }
 .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
 
-/* Formularios */
 .form__error, .field-error { color: var(--danger); font-size: .9rem; font-weight: 500; margin: 0; }
 .field { display: flex; flex-direction: column; gap: 6px; font-weight: 500; font-size: .95rem; }
 .field__label { font-weight: 600; }
@@ -47,7 +40,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .auth__tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; background: none; padding: 10px; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; color: var(--muted); }
 .auth__tabs button.is-active { background: var(--violet-700); color: #fff; }
 
-/* Subida de imágenes */
 .upload { display: flex; flex-direction: column; gap: 8px; }
 .upload__box { position: relative; width: 100%; max-width: 420px; aspect-ratio: 16 / 9; border: 2px dashed var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-alt); display: grid; place-items: center; }
 .upload__box img { width: 100%; height: 100%; object-fit: cover; }
@@ -57,12 +49,10 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .spin, .spinner { animation: spin .9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Spinner */
 .spinner-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 40px 0; color: var(--muted); }
 .spinner-wrap--full { min-height: 50vh; }
 .spinner { width: 24px; height: 24px; border: 3px solid var(--line); border-top-color: var(--violet-700); border-radius: 50%; }
 
-/* Avisos y etiquetas */
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; margin: 4px 6px 0 0; }
 .badge--ok { background: var(--ok-bg); color: var(--ok); }
 .badge--warn { background: var(--warn-bg); color: var(--warn); }
@@ -77,7 +67,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .request-item { justify-content: space-between; flex-wrap: wrap; align-items: center !important; }
 .request-item small { display: block; color: var(--muted); }
 
-/* Notificaciones */
 .toasts { position: fixed; right: 16px; bottom: 16px; z-index: 200; display: flex; flex-direction: column; gap: 10px; max-width: min(420px, calc(100vw - 32px)); }
 .toast { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; border-radius: 12px; box-shadow: var(--shadow); font-weight: 500; background: #fff; border: 1px solid var(--line); }
 .toast span { flex: 1; }
@@ -87,7 +76,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .toast--error { border-left: 5px solid var(--danger); }
 .toast--error svg { color: var(--danger); }
 
-/* Ventana modal */
 .modal { position: fixed; inset: 0; z-index: 150; background: rgba(48,43,56,.55); display: grid; place-items: center; padding: 16px; overflow: visible; }
 .modal__box { display: flex; flex-direction: column; min-height: 0; background: #fff; border-radius: var(--radius); width: 100%; max-width: 480px; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,.3); }
 .modal__box--wide { max-width: 1000px; }
@@ -97,9 +85,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .modal__body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: 22px; }
 .modal__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 
-/* Vista de un curso (página pública y vista previa) */
-
-/* ---------- Estructura del panel ---------- */
 .panel { min-height: 100vh; display: grid; grid-template-columns: 270px 1fr; background: #faf9fc; }
 .panel__top, .panel__backdrop { display: none; }
 .panel__side { background: var(--violet-900); color: #d6d0e2; display: flex; flex-direction: column; padding: 22px 16px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
@@ -178,7 +163,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
   .novedad-admin__acciones .btn { flex: 1 1 auto; justify-content: center; }
 }
 
-/* ---------- Editor del anuncio del inicio ---------- */
 .novedad-form { display: grid; gap: 14px; }
 .novedad-form .field { margin: 0; }
 .novedades-admin { display: grid; gap: 12px; margin-top: 18px; padding: 0; list-style: none; }
@@ -202,13 +186,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 }
 @media (max-width: 760px) { .novedad-admin { align-items: flex-start; flex-wrap: wrap; } .novedad-admin__acciones { width: 100%; justify-content: flex-start; } }
 
-
-/* =====================================================================
-   Flyers verticales (proporción 7:10)
-   El flyer SIEMPRE se muestra completo: object-fit: contain, nunca cover.
-   ===================================================================== */
-
-/* Tarjetas del catálogo */
 .cards--flyers { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
 .fcard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s; }
 .fcard:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(48,43,56,.14); }
@@ -237,19 +214,17 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 }
 @media (max-width: 380px) { .cards--flyers { grid-template-columns: 1fr; } }
 
-/* Flyer clickeable (detalle y vista previa) */
 .flyer { position: relative; display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: #f3f1f7; overflow: hidden; cursor: zoom-in; aspect-ratio: 7 / 10; }
 .flyer.is-loaded { aspect-ratio: auto; }
 .flyer img { display: block; width: 100%; height: auto; }
 .flyer:not(.is-loaded) img { position: absolute; inset: 0; height: 100%; object-fit: contain; }
 .flyer__zoom { position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 6px; background: rgba(48,43,56,.78); color: #fff; font-size: .82rem; font-weight: 600; padding: 7px 12px; border-radius: 999px; }
 .flyer:hover .flyer__zoom, .flyer:focus-visible .flyer__zoom { background: var(--violet-700); }
-/* Ya cargada la imagen, el aviso va DEBAJO del flyer: nunca tapa su información. */
+
 .flyer.is-loaded .flyer__zoom { position: static; display: flex; justify-content: center; width: 100%; border-radius: 0; background: #f3f1f7; color: var(--violet-700); padding: 9px 12px; border-top: 1px solid var(--line); }
 .flyer.is-loaded:hover .flyer__zoom, .flyer.is-loaded:focus-visible .flyer__zoom { background: var(--violet-700); color: #fff; }
 .flyer--empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--muted); text-align: center; padding: 20px; cursor: default; }
 
-/* Visor ampliado */
 .visor { position: fixed; inset: 0; z-index: 300; background: rgba(34,30,42,.93); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 56px 12px 16px; }
 .visor__img { display: block; max-width: min(96vw, 1100px); max-height: calc(100vh - 110px); width: auto; height: auto; object-fit: contain; border-radius: 8px; background: #fff; }
 .visor__cerrar { position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255,255,255,.16); color: #fff; cursor: pointer; }
@@ -257,7 +232,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .visor__original { display: inline-flex; align-items: center; gap: 6px; color: #d9d0ee; font-size: .9rem; }
 .visor__original:hover { color: #fff; text-decoration: underline; }
 
-/* Página de detalle: flyer + información */
 .cview { display: grid; grid-template-columns: minmax(300px, 440px) minmax(0, 1fr); gap: 40px; align-items: start; }
 .cview__flyer { position: sticky; top: calc(var(--header-h) + 16px); }
 .cview__head h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
@@ -268,7 +242,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
   .cview__flyer { position: static; max-width: 460px; width: 100%; margin-inline: auto; }
 }
 
-/* Subida de flyers en el panel */
 .upload__flyer-box { position: relative; width: 100%; max-width: 280px; aspect-ratio: 7 / 10; border: 2px dashed var(--line); border-radius: var(--radius); overflow: hidden; background: #f3f1f7; display: grid; place-items: center; }
 .upload__flyer-box img { width: 100%; height: 100%; object-fit: contain; }
 .upload__info { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: .88rem; color: var(--ok); font-weight: 500; }
@@ -276,8 +249,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .upload__aviso { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: .88rem; color: var(--warn); background: var(--warn-bg); padding: 8px 10px; border-radius: 8px; }
 .upload__aviso svg { flex-shrink: 0; margin-top: 2px; }
 
-
-/* ---------- Catálogo: buscador, orden y filtros ---------- */
 .filters--catalogo { margin-bottom: 20px; }
 .orden { display: flex; align-items: center; gap: 10px; font-weight: 500; color: var(--muted); }
 .orden select { font: inherit; padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); }
@@ -295,7 +266,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
   .chip { white-space: nowrap; flex-shrink: 0; }
 }
 
-/* ---------- Detalle del curso: secciones ---------- */
 .demo-banner { margin-bottom: 14px; display: flex; align-items: flex-start; gap: 8px; background: var(--violet-50); border: 1px solid var(--violet-300); color: var(--violet-800); border-radius: 10px; padding: 10px 14px; font-size: .92rem; font-weight: 500; }
 .demo-banner svg { flex-shrink: 0; margin-top: 3px; }
 .cview__main { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
@@ -333,7 +303,6 @@ code { background: var(--violet-50); padding: 1px 6px; border-radius: 6px; font-
 .contacto-botones { display: flex; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 520px) { .contacto-botones .btn { width: 100%; } .cview__cta { width: 100%; } }
 
-/* ---------- Panel: bloques repetibles (etapas, certificaciones) ---------- */
 .repetible { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 18px; width: 100%; }
 .repetible__vacio { color: var(--muted); font-size: .92rem; margin: 0; }
 .repetible__item { display: flex; gap: 10px; width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--bg-alt); }

@@ -1,7 +1,5 @@
 import { ArrowDown, ArrowUp, Plus, Trash2 } from 'lucide-react'
 
-// Lista de bloques que se pueden agregar, quitar y reordenar (etapas, certificaciones).
-// children(item, cambiar) devuelve los campos de cada bloque.
 export default function Repetible({ titulo, ayuda, items, onChange, vacio, agregar, error, children }) {
   const cambiarItem = (i, campo, valor) =>
     onChange(items.map((it, n) => (n === i ? { ...it, [campo]: valor } : it)))

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
-// Franja de cierre antes del pie de página.
 export default function CtaBand() {
   return (
     <section className="cta-band" aria-labelledby="cta-title">

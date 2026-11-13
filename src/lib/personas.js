@@ -8,7 +8,6 @@ const ok = ({ data, error }) => {
 const BUCKET = 'personas'
 export const TIPOS_PERSONA = { creador: 'Creador/a', docente: 'Docente' }
 
-// ---------- Público: solo perfiles visibles (lo garantiza RLS) ----------
 export async function listarPersonasPublicas() {
   return ok(
     await supabase
@@ -20,7 +19,6 @@ export async function listarPersonasPublicas() {
   )
 }
 
-// ---------- Profesor ----------
 export async function listarPersonas() {
   return ok(await supabase.from('personas').select('*').order('tipo').order('orden').order('created_at'))
 }
@@ -39,7 +37,6 @@ export async function eliminarPersona(persona) {
   if (persona.foto_path) await borrarFoto(persona.foto_path)
 }
 
-// Intercambia el orden de dos perfiles contiguos.
 export async function intercambiarOrden(a, b) {
   const oa = a.orden
   const ob = b.orden === a.orden ? a.orden + 1 : b.orden
@@ -47,7 +44,6 @@ export async function intercambiarOrden(a, b) {
   ok(await supabase.from('personas').update({ orden: oa }).eq('id', b.id).select('id'))
 }
 
-// ---------- Fotos ----------
 export async function subirFoto(personaId, blob, ext) {
   const path = `${personaId}/${Date.now()}.${ext}`
   const { error } = await supabase.storage.from(BUCKET).upload(path, blob, {
@@ -65,11 +61,10 @@ export async function borrarFoto(path) {
   try {
     await supabase.storage.from(BUCKET).remove([path])
   } catch {
-    /* una foto huérfana no afecta al sitio */
+
   }
 }
 
-// Reduce el retrato a un máximo de 800 px (sin deformarlo) y lo pasa a WebP.
 export async function prepararRetrato(file) {
   if (!file || !['image/jpeg', 'image/png', 'image/webp'].includes(file.type))
     throw new Error('Solo se permiten imágenes JPG, PNG o WEBP.')

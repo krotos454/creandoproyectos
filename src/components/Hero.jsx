@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, MessageCircle } from 'lucide-react'
 
-// Portada: fondo lavanda con ondas, título y botones a la izquierda, logo grande a la derecha.
 export default function Hero() {
   return (
     <section className="hero hero--logo" aria-labelledby="hero-title">

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-// Ejecuta una función asíncrona y devuelve { data, error, loading, reload }.
 export function useAsync(fn, deps = []) {
   const [state, setState] = useState({ data: null, error: null, loading: true })
   const fnRef = useRef(fn)

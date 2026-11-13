@@ -49,7 +49,6 @@
 
 @keyframes novedad-slide-in { from { opacity: .4; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
 
-/* Carrusel único: portada y novedades comparten un marco fijo y centrado. */
 .home__carousel { width: min(1520px, calc(100% - 40px)); margin: 16px auto 0; padding: clamp(18px, 2.2vw, 30px) clamp(20px, 3.2vw, 48px) 18px; border-radius: 30px; background: #f7f3fb; box-shadow: 0 14px 38px rgba(63,45,99,.08); }
 .home__carousel-view { min-height: 470px; overflow: hidden; border-radius: 26px; background: transparent; animation: novedad-slide-in .35s ease-out; }
 .home__carousel-view > .hero { min-height: 470px; height: 100%; border-radius: 26px; }

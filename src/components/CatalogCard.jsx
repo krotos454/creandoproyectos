@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Clock, Folder, ImageIcon, Monitor } from 'lucide-react'
 import { MODALIDADES, resumenAranceles, tieneAranceles } from '../lib/format.js'
 
-// Tarjeta del catálogo (página Cursos): flyer completo arriba, etiqueta sobre el flyer,
-// datos debajo y botón "Ver detalles" siempre alineado abajo.
 export default function CatalogCard({ curso }) {
   const c = curso
   const imagen = c.imagen_miniatura_url || c.imagen_url

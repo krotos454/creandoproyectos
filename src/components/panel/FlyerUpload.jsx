@@ -2,17 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { ImagePlus, Trash2, Loader2, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import { prepararFlyer, validarFlyer, formatearPeso } from '../../lib/imagenes.js'
 
-// Subida de flyers verticales con vista previa ANTES de guardar.
-// La imagen se procesa en el navegador (sin recortarla) y recién se sube al guardar el curso.
-//   url        -> flyer ya guardado en el curso (si lo hay)
-//   pendiente  -> flyer elegido que todavía no se guardó
 export default function FlyerUpload({ url, pendiente, onSeleccionar, onQuitar, onProcesando }) {
   const input = useRef(null)
   const [procesando, setProcesando] = useState(false)
   const [error, setError] = useState('')
   const [medidaGuardada, setMedidaGuardada] = useState(null)
 
-  // Libera la vista previa cuando se reemplaza o se descarta.
   useEffect(() => () => pendiente?.vistaPrevia && URL.revokeObjectURL(pendiente.vistaPrevia), [pendiente])
 
   const onFile = async (e) => {

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { site } from '../config/site.js'
 
-// Logo oficial: manos formando un círculo con la Ψ. Está en public/logo.png (y logo-144.png para tamaños chicos).
 export default function Logo({ light = false }) {
   return (
     <Link to="/" className={`logo ${light ? 'logo--light' : ''}`} aria-label={`${site.name} - Inicio`}>

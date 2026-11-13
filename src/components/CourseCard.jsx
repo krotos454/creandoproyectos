@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import { Clock, ImageIcon, Monitor, Wallet } from 'lucide-react'
 import { MODALIDADES, resumenAranceles, tieneAranceles } from '../lib/format.js'
 
-// Tarjeta compacta del catálogo: flyer completo (object-fit: contain), etiqueta encima,
-// y debajo nombre, duración, modalidad, precio y botón.
 export default function CourseCard({ curso }) {
   const c = curso
   const miniatura = c.imagen_miniatura_url || c.imagen_url

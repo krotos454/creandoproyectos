@@ -7,7 +7,6 @@ import Spinner from '../../components/Spinner.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { mensajeError } from '../../lib/format.js'
 
-// Página oculta: no hay ningún enlace hacia acá en el sitio. Se entra escribiendo /profesor.
 export default function ProfesorLogin() {
   const { configured, loading, user, esProfesor, signIn, signOut } = useAuth()
   const navigate = useNavigate()

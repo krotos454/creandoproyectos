@@ -11,17 +11,15 @@ import { subirFlyer, borrarImagenes, clavesDeCurso } from '../../lib/storage.js'
 import { useToast } from '../../context/ToastContext.jsx'
 import { ESTADOS, mensajeError } from '../../lib/format.js'
 
-// Formulario de creación y edición de cursos.
-// onGuardar(payload) debe devolver una promesa; lanza error si falla.
 export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
   const [v, setV] = useState(inicial)
   const [errores, setErrores] = useState({})
   const [guardando, setGuardando] = useState(false)
   const [previa, setPrevia] = useState(false)
-  const [flyer, setFlyer] = useState(null) // flyer elegido que todavía no se subió
-  const [procesandoFlyer, setProcesandoFlyer] = useState(false) // evita guardar mientras se prepara la imagen
+  const [flyer, setFlyer] = useState(null)
+  const [procesandoFlyer, setProcesandoFlyer] = useState(false)
   const toast = useToast()
-  // Imágenes que el curso tiene guardadas en R2 (para limpiar las que dejen de usarse).
+
   const guardadas = useRef(clavesDeCurso(inicial))
 
   const set = (campo) => (e) => {
@@ -30,7 +28,6 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
     if (errores[campo]) setErrores((er) => ({ ...er, [campo]: undefined }))
   }
 
-  // modo: 'borrador' | 'publicar' | 'guardar' (mantiene publicado) | 'despublicar'
   const enviar = async (modo) => {
     const estado =
       modo === 'publicar' ? 'publicado'
@@ -49,7 +46,7 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
       let valores = { ...v, estado }
       let subida = null
       if (flyer) {
-        // El flyer se sube recién ahora, a R2 a través del Worker; el original queda guardado.
+
         try {
           subida = await subirFlyer(flyer)
           valores = { ...valores, ...subida }
@@ -60,12 +57,11 @@ export default function CursoForm({ inicial, categorias, esNuevo, onGuardar }) {
       }
       const guardo = await onGuardar(cursoAPayload(valores), modo)
       if (guardo === false) {
-        // El curso no se guardó: se descarta la imagen recién subida para no dejarla abandonada.
+
         if (subida) await borrarImagenes(clavesDeCurso(subida)).catch(() => {})
         return
       }
-      // Guardado: se borran las imágenes anteriores que ya no usa este curso
-      // (el Worker no borra ninguna que otro curso siga usando).
+
       const nuevas = clavesDeCurso(valores)
       const viejas = guardadas.current.filter((k) => !nuevas.includes(k))
       guardadas.current = nuevas

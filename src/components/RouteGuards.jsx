@@ -4,9 +4,6 @@ import { useAuth } from '../context/AuthContext.jsx'
 import Spinner from './Spinner.jsx'
 import ConfigNotice from './ConfigNotice.jsx'
 
-// Estas guardas solo evitan mostrar pantallas que no corresponden.
-// La seguridad real está en la base de datos: aunque alguien llegue a una pantalla,
-// Supabase rechaza cualquier cambio que no venga de la cuenta del profesor.
 export function RequireProfesor() {
   const { configured, loading, user, esProfesor, signOut } = useAuth()
   const location = useLocation()

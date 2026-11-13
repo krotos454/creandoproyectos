@@ -1,6 +1,5 @@
 import { Settings } from 'lucide-react'
 
-// Se muestra únicamente si todavía no se completó el archivo .env con las claves de Supabase.
 export default function ConfigNotice() {
   return (
     <section className="section container">
